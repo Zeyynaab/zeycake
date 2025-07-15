@@ -1,117 +1,106 @@
-const { v4: uuidv4 } = require('uuid');
-const { Op } = require('sequelize');
-const Produit = require('../models/produits');
+// controllers/produitsController.js
+const Product = require('../models/produits');
 
-// Récupérer tous les produits
 exports.getAllProduits = async (req, res) => {
-    const { categorie, disponible, recherche } = req.query;
-
-    let where = {};
-
-    if (categorie) where.categorie = categorie;
-    if (disponible !== undefined) where.disponible = disponible === 'true';
-    if (recherche) {
-        where[Op.or] = [
-            { nom: { [Op.like]: `%${recherche}%` } },
-            { description: { [Op.like]: `%${recherche}%` } }
-        ];
-    }
-
-    const produits = await Produit.findAll({ where });
-
-    res.json({
-        success: true,
-        data: produits,
-        total: produits.length,
-    });
+  try {
+    const produits = await Product.find();
+    res.json(produits);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la récupération des produits", error: error.message });
+  }
 };
 
-// Récupérer un produit par ID
 exports.getProduitById = async (req, res) => {
-    const produit = await Produit.findByPk(req.params.id);
-    if (!produit) {
-        return res.status(404).json({
-            success: false,
-            message: 'Produit non trouvé',
-        });
-    }
+  try {
+    const produit = await Product.findById(req.params.id);
+    if (!produit) return res.status(404).json({ message: "Produit non trouvé" });
 
-    res.json({
-        success: true,
-        data: produit,
+    res.json(produit);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la récupération", error: error.message });
+  }
+};
+
+// Tous les produits vedettes (limite 4) Nouveau
+exports.getFeaturedProducts = async (req, res) => {
+  try {
+    const vedettes = await Product.find({ vedette: true }).limit(4);
+    res.json(vedettes);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la récupération des produits vedettes", error: error.message });
+  }
+};
+///FIN
+exports.createProduit = async (req, res) => {
+  
+
+  try {
+    const { nom, description, prix, categorie, ingredients, tempsPreparation, difficulte, disponible,vedette} = req.body;
+    const vedetteBool = vedette === 'true' || vedette === true;
+    
+    //ajout pour upload limage 
+    const image = req.file ? req.file.filename : null;
+
+    const nouveauProduit = new Product({
+      nom,
+      description,
+      prix,
+      categorie,
+      ingredients,
+      tempsPreparation,
+      difficulte,
+      disponible,
+      image,
+      vedette: vedetteBool, //nouveau
     });
+
+    await nouveauProduit.save();
+    res.status(201).json({ message: "Produit créé avec succès", produit: nouveauProduit });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la création", error: error.message });
+  }
 };
 
-// Créer un nouveau produit
-exports.createProduit = async (req, res, next) => {
-    try {
-        const produit = await Produit.create({
-            id: uuidv4(),
-            ...req.body,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        });
+exports.updateProduit = async (req, res) => {
+  try {
+    const updateData = { ...req.body };
 
-        res.status(201).json({
-            success: true,
-            message: 'Produit créé avec succès',
-            data: produit,
-        });
-    } catch (error) {
-        next(error);
+    // Si une nouvelle image est envoyée, on la met à jour
+    if (req.file) {
+      updateData.image = req.file.filename;
     }
+
+    const updatedProduit = await Product.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedProduit) return res.status(404).json({ message: "Produit non trouvé" });
+
+    res.json({ message: "Produit mis à jour", produit: updatedProduit });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la mise à jour", error: error.message });
+  }
 };
 
-// Mettre à jour un produit
-exports.updateProduit = async (req, res, next) => {
-    try {
-        const produit = await Produit.findByPk(req.params.id);
-        if (!produit) {
-            return res.status(404).json({
-                success: false,
-                message: 'Produit non trouvé',
-            });
-        }
 
-        await produit.update({
-            ...req.body,
-            updatedAt: new Date(),
-        });
-
-        res.json({
-            success: true,
-            message: 'Produit mis à jour avec succès',
-            data: produit,
-        });
-    } catch (error) {
-        next(error);
-    }
-};
-
-// Supprimer un produit
 exports.deleteProduit = async (req, res) => {
-    const produit = await Produit.findByPk(req.params.id);
-    if (!produit) {
-        return res.status(404).json({
-            success: false,
-            message: 'Produit non trouvé',
-        });
-    }
+  try {
+    const deleted = await Product.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: "Produit non trouvé" });
 
-    await produit.destroy();
-
-    res.json({
-        success: true,
-        message: 'Produit supprimé avec succès',
-        data: produit,
-    });
+    res.json({ message: "Produit supprimé avec succès" });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la suppression", error: error.message });
+  }
 };
 
-// Récupérer les catégories disponibles
-exports.getCategories = (req, res) => {
-    const categories = ['gâteaux', 'tartes', 'viennoiseries', 'petits-fours', 'chocolats'];
-    res.json({
-        success: true,
-        data: categories,
-    });
+exports.getCategories = async (req, res) => {
+  try {
+    const categories = await Product.distinct('categorie');
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la récupération des catégories", error: error.message });
+  }
 };

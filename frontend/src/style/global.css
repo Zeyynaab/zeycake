@@ -38,6 +38,66 @@
   object-fit: contain;
 }
 
+
+/* Bouton du header pour les pages */
+/* 🟥 En desktop : on cache le bouton hamburger */
+/* .menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/*🟢 En responsive (mobile ou petit écran) 
+@media (max-width: 768px) {
+  .main-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem; /* ✅ Placé complètement à droite 
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    border-radius: 0 0 0 12px;
+    box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px 20px;
+    z-index: 999;
+    min-width: 200px;
+    align-items: flex-start;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 12px 0;
+    text-align: left;
+    width: 100%;
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+  }
+} */
+
+
+
+
 /*PAGE BANNER*/
  .page-banner {
   position: relative;
@@ -133,6 +193,104 @@ ul {
   background-color: white; /*avant ffe9e3*/
 }
 
+/*AFFICHER LE NOM DU CLIENT SUR LES PAGES NAVBAR(Home) ET HEADER(other page) */
+.logo-and-user {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-greeting {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #5c2a07;
+  font-size: 20px;
+}
+
+/*BOUTON HAMBURGER POUR LA PAGE HOME*/
+/* Pour la navbar responsive */
+/* bouton hamburger */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  list-style: none;
+}
+
+/* dropdown desktop */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  padding: 10px;
+  flex-direction: column;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  min-width: 160px;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+  
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .nav-links {
+    display: none!important;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    border-radius: 0 0 0 12px;
+    box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px 20px;
+    z-index: 999;
+    min-width: 220px;
+    align-items: flex-start;
+  }
+
+  .nav-links.open {
+    display: flex!important;
+  }
+
+  /* cacher les dropdown en mobile */
+  .dropdown {
+    display: none !important;
+  }
+}
+
+
+
 /* ================= NAVIGATION SUPPLÉMENTAIRE ================= */
 
 /* Icône panier */
@@ -203,7 +361,6 @@ ul {
 
 /* HERO SECTION  HOME */
 .home-banner-image {
-  /*background-image: url("/images/fruits-rouges.jpg"); /* mets ici ta vraie image */
   background-size: cover;
   background-position: center;
   height: 600px; /*avant 80vh*/
@@ -250,9 +407,12 @@ ul {
 .home-btn:hover {
   background-color: #7d3a23;
 }
+
+
+
+
 /*A PROPOS SECTION */
 .about-section {
-  /*background: linear-gradient(to right, #fff6f0, #fffdfc); /*couleur creme rosée*/
   display: flex;
   align-items: center;
   justify-content: center;
@@ -269,9 +429,9 @@ ul {
   border-left: 3px solid #f4c4b8; /*ligne vertiicale a gauche*/
   padding-left: 20px;
   flex: 2;       
-  font-size: 1rem;              /* ← plus large que l’image */
-  max-width: none;             /* ← enlève la limite rigide */
-  font-style: italic;           /* ← taille lisible, pas trop grande */
+  font-size: 1rem;              /* plus large que l’image */
+  max-width: none;             /* enlève la limite rigide */
+  font-style: italic;           /* taille lisible, pas trop grande */
   line-height: 1.8;
   font-family: "Georgia", serif;
 }
@@ -331,7 +491,7 @@ ul {
 
 
 /* FEATURED PRODUCTS */
-/* FEATURED PRODUCTS */
+
 .featured-products {
   padding: 80px 40px 30px;
   background-color: white; /*avant fff1e8 */
@@ -810,3 +970,24 @@ ul {
   color: #ccc;
 }
 
+/* ✅ Notification message (succès / erreur)  Page Auth*/
+.notification {
+  margin: 10px auto 20px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  max-width: 500px;
+  text-align: center;
+  font-weight: 500;
+  opacity: 0.95;
+  transition: opacity 0.3s ease;
+}
+
+.notification.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.notification.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}

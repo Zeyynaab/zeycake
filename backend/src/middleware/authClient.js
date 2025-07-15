@@ -1,26 +1,31 @@
-// middleware/authClient.js
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const User = require('../models/user'); // ✅ Nouveau modèle utilisé
 
-module.exports = function (req, res, next) {
+module.exports = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ success: false, message: 'Accès refusé. Token manquant.' });
+    return res.status(401).json({ message: 'Token requis pour le client.' });
   }
 
   const token = authHeader.split(' ')[1];
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select('-password');
 
-    if (decoded.role !== 'client') {
-      return res.status(403).json({ success: false, message: 'Accès réservé aux clients.' });
+    if (!user) {
+      return res.status(401).json({ message: 'Utilisateur non trouvé.' });
     }
 
-    req.user = decoded;
+    // ✅ Vérifie que c’est bien un client
+    if (user.role !== 'client') {
+      return res.status(403).json({ message: 'Accès réservé aux clients uniquement.' });
+    }
+
+    req.user = user; // Injection dans la requête
     next();
   } catch (error) {
-    res.status(401).json({ success: false, message: 'Token invalide.' });
+    res.status(401).json({ message: 'Token invalide.', erreur: error.message });
   }
 };

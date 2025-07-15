@@ -4,16 +4,25 @@ import '../style/global.css';
 import PageBanner from '../components/PageBanner';
 const Cart = () => {
   const [cart, setCart] = useState([]);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    setUser(storedUser);
+  }, []);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCart(storedCart);
-  }, []);
+    if (user) {
+      const storedCart = JSON.parse(localStorage.getItem(`cart_${user._id}`)) || [];
+      setCart(storedCart);
+    }
+  }, [user]);
 
   const total = cart.reduce((sum, item) => sum + item.prix * item.quantity, 0);
 
   const handleClearCart = () => {
-    localStorage.removeItem('cart');
+    if (user) {
+      localStorage.removeItem(`cart_${user._id}`); // ✅ supprimer le panier de cet utilisateur
+    }
     setCart([]);
   };
 
@@ -35,16 +44,16 @@ const Cart = () => {
             <ul className="cart-list">
               {cart.map((item, index) => (
                 <li key={index} className="cart-item">
-                  <img src={item.image} alt={item.nom} className="cart-image" />
+                  <img src={`http://localhost:5050/uploads/${item.image}`} alt={item.nom} className="cart-image" />
                   <div>
                     <h4>{item.nom}</h4>
                     <p>Quantité : {item.quantity}</p>
-                    <p>{item.prix * item.quantity} €</p>
+                    <p>{item.prix * item.quantity} $</p>
                   </div>
                 </li>
               ))}
             </ul>
-            <p className="cart-total">Total : {total.toFixed(2)} €</p>
+            <p className="cart-total">Total : {total.toFixed(2)} $</p>
             <div className="cart-actions">
               <button onClick={handleClearCart} className="cart-btn danger">Vider le panier</button>
               <Link to="/checkout">

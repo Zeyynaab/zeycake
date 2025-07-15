@@ -1,24 +1,26 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
-const admin = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+module.exports = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).json({ success: false, message: 'Token manquant' });
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Token requis pour l\'administrateur' });
   }
+
+  const token = authHeader.split(' ')[1];
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
 
-    if (decoded.role !== 'admin') {
-      return res.status(403).json({ success: false, message: 'Accès réservé aux administrateurs' });
+    if (!user || user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès réservé aux administrateurs' });
     }
 
-    req.user = decoded; // utile si on veut accéder à l'ID ou au rôle plus tard
+    req.user = user;
     next();
-  } catch (err) {
-    return res.status(401).json({ success: false, message: 'Token invalide' });
+  } catch (error) {
+    res.status(401).json({ message: 'Token invalide', error: error.message });
   }
 };
-
-module.exports = admin;

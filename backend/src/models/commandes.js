@@ -1,44 +1,16 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../database');
+// models/Commande.js
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-class Commande extends Model {}
+const commandeSchema = new Schema({
+  clientId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  produits: [{ type: Object, required: true }], 
+  dateCommande: { type: Date, default: Date.now },
+  dateRecuperation: Date,
+  statut: { type: String, default: 'en-attente' },
+  total: { type: Number, required: true },
+  commentaires: String,
+  adresse: String,
+}, { timestamps: true });
 
-Commande.init({
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  clientId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    references: {
-      model: 'Clients', 
-      key: 'id',
-    },
-  },
-  produits: {
-    type: DataTypes.JSON, 
-    allowNull: false,
-  },
-  dateCommande: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  dateRecuperation: DataTypes.DATE,
-  statut: {
-    type: DataTypes.STRING,
-    defaultValue: 'en-attente',
-  },
-  total: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  commentaires: DataTypes.TEXT,
-}, {
-  sequelize,
-  modelName: 'Commande',
-  timestamps: true, // createdAt, updatedAt
-});
-
-module.exports = Commande;
+module.exports = mongoose.model('Commande', commandeSchema);

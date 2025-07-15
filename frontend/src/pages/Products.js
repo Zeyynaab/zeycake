@@ -8,17 +8,17 @@ import '../style/global.css';
 const Products = () => {
   const [products, setProducts] = useState([]);
 
-  // Plus tard : active ça pour utiliser l’API
-  /*
+  // Plus tard : apour utiliser l’API
+  
   useEffect(() => {
     fetchProduits()
       .then(res => setProducts(res.data))
       .catch(error => console.error('Erreur:', error));
   }, []);
-  */
+ 
 
   // Données temporaire pour test
-  useEffect(() => {
+  /* useEffect(() => {
     const produitsTest = [
       { _id: "1", nom: "Pâtisserie Millefeuille (8 personnes)", image: "Chocolat.jpg", prix: 46, avis: 45 },
       { _id: "2", nom: "Dessert à Laval : Tarte Passion (8 pers)", image: "Citron.jpg", prix: 49, avis: 5 },
@@ -33,7 +33,7 @@ const Products = () => {
     
     ];
     setProducts(produitsTest);
-  }, []);
+  }, []); */
 
   return (
     <>

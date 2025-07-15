@@ -1,34 +1,28 @@
-// middleware/auth.js
+//Routes pour les admin seulement
 const jwt = require('jsonwebtoken');
-const User  = require('../models/user');
+const User = require('../models/user');
 
-const authMiddleware = async (req, res, next) => {
-    try {
-        const token = req.header('Authorization')?.replace('Bearer ', '');
+module.exports = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-        if (!token) {
-            return res.status(401).json({
-                success: false,
-                message: 'Accès refusé. Token manquant.'
-            });
-        }
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Token manquant ou invalide' });
+  }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        //const user = users.find(u => u.id === decoded.userId);
-        const user = await User.findByPk(decoded.userId); //sequelize
-        
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: 'Token invalide'
-            });
-        }
+  const token = authHeader.split(' ')[1];
 
-        req.user = user;
-        next();
-    } catch (error) {
-        next(error);
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select('-password');
+    if (!user) return res.status(401).json({ message: 'Utilisateur non trouvé' });
+//verifie si user=admin
+    if (user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès réservé aux administrateurs.' });
     }
-};
 
-module.exports = authMiddleware;
+    req.user = user;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Token invalide', error: error.message });
+  }
+};

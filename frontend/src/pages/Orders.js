@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import OrderItem from '../components/OrderItem';
 import '../style/global.css';
 import PageBanner from '../components/PageBanner';
+import { fetchCommandesClient } from '../api/api'; // ✅ On importe l'appel API
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/commandes')
-      .then((res) => res.json())
-      .then((data) => setOrders(data))
+    fetchCommandesClient()
+      .then((res) => setOrders(res.data))
       .catch((err) => console.error('Erreur lors du chargement des commandes:', err));
   }, []);
 
   return (
-      <>
-      <PageBanner image="/images/fruits-rouges.jpg" titre="Vos commandes"/>
+    <>
+      <PageBanner image="/images/fruits-rouges.jpg" titre="Vos commandes" />
       <div className="orders">
         <h2>Mes Commandes</h2>
         {orders.length === 0 ? (

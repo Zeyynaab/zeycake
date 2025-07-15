@@ -1,50 +1,18 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../database');
+// models/Product.js
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-class Product extends Model {}
+const productSchema = new Schema({
+  nom: { type: String, required: true },
+  description: String,
+  prix: { type: Number, required: true },
+  image: {type: String, required: true},
+  categorie: { type: String, required: true },
+  ingredients: [{ type: String }],
+  tempsPreparation: Number,
+  difficulte: String,
+  disponible: { type: Boolean, default: true },
+  vedette: {type:Boolean, default:false} //nouveau
+}, { timestamps: true });
 
-Product.init({
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  nom: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
-  prix: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  categorie: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  ingredients: {
-    type: DataTypes.JSON,
-    allowNull: true, // facultatif selon ton usage
-  },
-  tempsPreparation: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
-  difficulte: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  disponible: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true,
-  },
-}, {
-  sequelize,
-  modelName: 'Product',
-  timestamps: true, // ajoute createdAt et updatedAt automatiquement
-});
-
-module.exports = Product;
+module.exports = mongoose.model('Product', productSchema);

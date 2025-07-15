@@ -1,21 +1,21 @@
 const express = require('express');
 const { validateBody, validateParams, schemas } = require('../middleware/validation');
-const commandesController = require('../controllers/commandesController'); // Importer le contrôleur
 const router = express.Router();
 
-// GET /api/commandes - Récupérer toutes les commandes
-router.get('/', commandesController.getAllCommandes);
+const verifyToken = require('../middleware/auth');       // ✅ Admin uniquement
+const authUser = require('../middleware/authUser');      // ✅ Admin + Client
 
-// GET /api/commandes/:id - Récupérer une commande par ID
-router.get('/:id', validateParams(schemas.id), commandesController.getCommandeById);
+const commandesController = require('../controllers/commandesController'); // Contrôleur
 
-// POST /api/commandes - Créer une nouvelle commande
-router.post('/', validateBody(schemas.commande), commandesController.createCommande);
+// ✅ ADMIN uniquement
+router.get('/', verifyToken, commandesController.getAllCommandes);
+router.put('/:id/statut', verifyToken, validateParams(schemas.id), commandesController.updateCommandeStatut);
+router.delete('/:id', authUser, validateParams(schemas.id), commandesController.deleteCommande);
 
-// PUT /api/commandes/:id/statut - Mettre à jour le statut d'une commande
-router.put('/:id/statut', validateParams(schemas.id), commandesController.updateCommandeStatut);
-
-// DELETE /api/commandes/:id - Supprimer une commande
-router.delete('/:id', validateParams(schemas.id), commandesController.deleteCommande);
+// ✅ CLIENT + ADMIN
+router.get('/mes-commandes', authUser, commandesController.getCommandesUtilisateur); 
+//router.post('/', authUser, validateBody(schemas.commande), commandesController.createCommande);
+router.post('/', authUser, commandesController.createCommande);
+router.get('/:id', authUser, validateParams(schemas.id), commandesController.getCommandeById);
 
 module.exports = router;

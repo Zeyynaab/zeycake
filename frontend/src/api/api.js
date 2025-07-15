@@ -1,18 +1,44 @@
+//pour importer directment les fetch 
 import axios from 'axios';
 
 // Pour React créé avec create-react-app
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5050/api",
+});
+
+// Intercepteur pour attacher le token
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 // Authentification
 export const login = (data) => API.post('/auth/login', data);
 export const register = (data) => API.post('/auth/register', data);
+//export const registerClient = (data) => API.post('/clients/register', data);
+
 
 // Produits
 export const fetchProduits = () => API.get('/produits');
 export const fetchProduitById = (id) => API.get(`/produits/${id}`);
 
 // Commandes
-export const fetchCommandes = () => API.get('/commandes');
-export const passerCommande = (data) => API.post('/commandes', data);
+//Commandes du client connecté
+export const fetchCommandesClient = () => API.get('/commandes/mes-commandes');
+//Toutes les commandes vues par l'admin
+export const fetchCommandesAdmin = () => API.get('/commandes');
+//export const passerCommande = (data) => API.post('/commandes', data);
+export const passerCommande = (data) => {
+  const token = localStorage.getItem('token');
+  return API.post('/commandes', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+
+export default API;

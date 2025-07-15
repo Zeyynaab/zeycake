@@ -1,62 +1,64 @@
+const User = require('../models/user');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
-const User = require('../models/users');
 
-// Obtenir le profil utilisateur actuel
+// ✅ GET /api/users/profile — profil utilisateur connecté
 exports.getProfile = async (req, res) => {
-  res.json({
-    success: true,
-    data: {
-      user: {
-        id: req.user.id,
-        nom: req.user.nom,
-        prenom: req.user.prenom,
-        email: req.user.email,
-        role: req.user.role,
-      },
-    },
-  });
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    if (!user) return res.status(404).json({ message: "Utilisateur introuvable" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la récupération du profil", error: error.message });
+  }
 };
 
-// Mettre à jour un utilisateur
-exports.updateUser = async (req, res, next) => {
+// ✅ PUT /api/users/:id — mettre à jour un utilisateur
+exports.updateUser = async (req, res) => {
   try {
-    const { id } = req.params;
     const { nom, prenom, email, password, role } = req.body;
+    const updateData = { nom, prenom, email, role };
 
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'Utilisateur non trouvé' });
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
     }
 
-    const hashedPassword = password ? await bcrypt.hash(password, 10) : user.password;
+    const updated = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    if (!updated) return res.status(404).json({ message: "Utilisateur non trouvé" });
 
-    await user.update({
-      nom,
-      prenom,
-      email,
-      password: hashedPassword,
-      role,
-      updatedAt: new Date(),
-    });
-
-    res.json({ success: true, message: 'Utilisateur mis à jour avec succès', data: user });
+    res.json({ message: "Utilisateur mis à jour", user: updated });
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: "Erreur mise à jour utilisateur", error: error.message });
   }
 };
 
-// Supprimer un utilisateur
+// ✅ DELETE /api/users/:id — supprimer un utilisateur
 exports.deleteUser = async (req, res) => {
-  const { id } = req.params;
+  try {
+    const deleted = await User.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: "Utilisateur non trouvé" });
 
-  const user = await User.findByPk(id);
-  if (!user) {
-    return res.status(404).json({ success: false, message: 'Utilisateur non trouvé' });
+    res.json({ message: "Utilisateur supprimé avec succès" });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur suppression utilisateur", error: error.message });
   }
-
-  await user.destroy();
-
-  res.json({ success: true, message: 'Utilisateur supprimé avec succès' });
 };
+
+/* // GET /api/users/clients — récupérer tous les clients
+exports.getAllClients = async (req, res) => {
+  try {
+    const clients = await User.find({ role: 'client' }).select('-password');
+    res.json(clients);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur récupération clients", error: error.message });
+  }
+}; */
+exports.getUsersByRole = async (req, res) => {
+  try {
+    const role = req.query.role || 'client';
+    const users = await User.find({ role });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', erreur: err.message });
+  }
+};
+

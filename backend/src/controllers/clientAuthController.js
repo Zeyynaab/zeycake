@@ -1,53 +1,81 @@
-const Client = require('../models/clients');
+/* const Client = require('../models/clients');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
 
-exports.register = async (req, res, next) => {
+// Inscription d’un client
+exports.register = async (req, res) => {
   try {
-    const { nom, prenom, email, password, telephone, adresse } = req.body;
+    const { nom, prenom, email, password,} = req.body;
 
-    const existing = await Client.findOne({ where: { email } });
-    if (existing) {
-      return res.status(400).json({ success: false, message: 'Email déjà utilisé' });
+    // Vérifier si l’email est déjà utilisé
+    const existingClient = await Client.findOne({ email });
+    if (existingClient) {
+      return res.status(400).json({ message: 'Cet email est déjà utilisé.' });
     }
 
+    // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Créer un nouveau client
     const nouveauClient = await Client.create({
-      id: uuidv4(),
       nom,
       prenom,
       email,
       password: hashedPassword,
-      telephone,
-      adresse,
-      createdAt: new Date(),
     });
 
-    res.status(201).json({ success: true, message: 'Compte client créé avec succès' });
-  } catch (err) {
-    next(err);
+    res.status(201).json({
+      message: 'Client inscrit avec succès',
+      client: {
+        id: nouveauClient._id,
+        nom: nouveauClient.nom,
+        email: nouveauClient.email,
+      }
+    });
+  } catch (error) {
+    console.error('Erreur inscription client :', error);
+    res.status(500).json({ message: 'Erreur serveur' });
   }
 };
 
-exports.login = async (req, res, next) => {
+// Connexion d’un client
+exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const client = await Client.findOne({ where: { email } });
 
-    if (!client || !(await bcrypt.compare(password, client.password))) {
-      return res.status(401).json({ success: false, message: 'Email ou mot de passe incorrect' });
+    // Vérifier que le client existe
+    const client = await Client.findOne({ email });
+    if (!client) {
+      return res.status(404).json({ message: 'Aucun compte trouvé avec cet email.' });
     }
 
+    // Vérifier le mot de passe
+    const passwordMatch = await bcrypt.compare(password, client.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Mot de passe incorrect.' });
+    }
+
+    // Générer un token JWT
     const token = jwt.sign(
-      { id: client.id, email: client.email, role: 'client' },
+      { id: client._id, email: client.email, role: 'client' },
       process.env.JWT_SECRET,
-      { expiresIn: '1d' }
+      { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
     );
 
-    res.json({ success: true, token });
-  } catch (err) {
-    next(err);
+    res.status(200).json({
+      message: 'Connexion réussie',
+      token,
+      user: {
+        id: client._id,
+        nom: client.nom,
+        prenom: client.prenom,
+        email: client.email,
+        role: 'client',
+      }
+    });
+  } catch (error) {
+    console.error('Erreur connexion client :', error);
+    res.status(500).json({ message: 'Erreur serveur' });
   }
 };
+ */

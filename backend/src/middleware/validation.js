@@ -1,101 +1,85 @@
+// middleware/validation.js
 const Joi = require('joi');
 
+// Schémas
+const schemas = {
+  id: Joi.object({
+    id: Joi.string().hex().length(24).required()
+  }),
+  produit: Joi.object({
+    nom: Joi.string().min(2).required(),
+    description: Joi.string().allow(''),
+    prix: Joi.number().positive().required(),
+    categorie: Joi.string().required(),
+    ingredients: Joi.array().items(Joi.string()),
+    tempsPreparation: Joi.number().integer().min(0),
+    difficulte: Joi.string().valid('facile', 'moyen', 'difficile'),
+    disponible: Joi.boolean()
+  }),
+  client: Joi.object({
+    nom: Joi.string().required(),
+    prenom: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).required(),
+    telephone: Joi.string().allow('', null),
+    adresse: Joi.object().optional(),
+    role : Joi.string().valid('client', 'admin').optional()
+  }),
+  commande: Joi.object({
+    clientId: Joi.string().hex().length(24).optional(),
+    produits: Joi.array().items(
+    Joi.object({
+      nom: Joi.string().required(),
+      qte: Joi.number().integer().min(1).required(),
+      prix: Joi.number().positive().required()
+    })
+  ).required(),
+     dateCommande: Joi.date().optional(),
+    dateRecuperation: Joi.date().optional(),
+    statut: Joi.string().valid('en-attente', 'en-preparation', 'pret', 'livre').optional(),
+    total: Joi.number().required(),
+    commentaires: Joi.string().allow('', null).optional()
+    }),
+  ingredient: Joi.object({
+    nom: Joi.string().required(),
+    unite: Joi.string().required(),
+    prix: Joi.number().positive().required(),
+    fournisseur: Joi.string().allow('', null),
+    stock: Joi.number().integer().min(0),
+    seuilAlerte: Joi.number().integer().min(0)
+  }),
+  update: Joi.object({
+    nom: Joi.string(),
+    prenom: Joi.string(),
+    email: Joi.string().email(),
+    password: Joi.string().min(6),
+    role: Joi.string().valid('client', 'admin')
+  })
+};
+
+// Fonctions de validation
 const validateBody = (schema) => {
-    return (req, res, next) => {
-        const { error } = schema.validate(req.body);
-        if (error) {
-            error.isJoi = true;
-            return next(error);
-        }
-        next();
-    };
+  return (req, res, next) => {
+    const result = schema.validate(req.body);
+    if (result.error) {
+      return res.status(400).json({ message: result.error.details[0].message });
+    }
+    next();
+  };
 };
 
 const validateParams = (schema) => {
-    return (req, res, next) => {
-        const { error } = schema.validate(req.params);
-        if (error) {
-            error.isJoi = true;
-            return next(error);
-        }
-        next();
-    };
-};
-
-// Schémas de validation
-const schemas = {
-    // Produits
-    produit: Joi.object({
-        nom: Joi.string().required().min(2).max(100),
-        description: Joi.string().max(500),
-        prix: Joi.number().positive().required(),
-        categorie: Joi.string().valid('gâteaux', 'tartes', 'viennoiseries', 'petits-fours', 'chocolats').required(),
-        ingredients: Joi.array().items(Joi.string()),
-        tempsPreparation: Joi.number().positive(),
-        difficulte: Joi.string().valid('facile', 'moyen', 'difficile'),
-        disponible: Joi.boolean().default(true)
-    }),
-
-    // Commandes
-    commande: Joi.object({
-        clientId: Joi.string().required(),
-        produits: Joi.array().items(
-            Joi.object({
-                produitId: Joi.string().required(),
-                quantite: Joi.number().positive().required(),
-                personnalisation: Joi.string().max(200)
-            })
-        ).min(1).required(),
-        dateRecuperation: Joi.date().min('now').required(),
-        commentaires: Joi.string().max(500)
-    }),
-
-    // Clients
-    client: Joi.object({
-        nom: Joi.string().required().min(2).max(50),
-        prenom: Joi.string().required().min(2).max(50),
-        email: Joi.string().email().required(),
-        telephone: Joi.string().pattern(/^[0-9\-\+\s\(\)]{10,}$/),
-        adresse: Joi.object({
-            rue: Joi.string().required(),
-            ville: Joi.string().required(),
-            codePostal: Joi.string().required(),
-            pays: Joi.string().default('France')
-        })
-    }),
-
-    // Ingrédients
-    ingredient: Joi.object({
-        nom: Joi.string().required().min(2).max(50),
-        unite: Joi.string().valid('g', 'kg', 'ml', 'l', 'piece').required(),
-        prix: Joi.number().positive(),
-        fournisseur: Joi.string(),
-        stock: Joi.number().min(0).default(0),
-        seuilAlerte: Joi.number().min(0).default(10)
-    }),
-
-    // Auth
-    login: Joi.object({
-        email: Joi.string().email().required(),
-        password: Joi.string().min(6).required()
-    }),
-
-    register: Joi.object({
-        nom: Joi.string().required().min(2).max(50),
-        prenom: Joi.string().required().min(2).max(50),
-        email: Joi.string().email().required(),
-        password: Joi.string().min(6).required(),
-        role: Joi.string().valid('admin', 'employee').default('employee')
-    }),
-
-    // Paramètres d'URL
-    id: Joi.object({
-        id: Joi.string().required()
-    })
+  return (req, res, next) => {
+    const result = schema.validate(req.params);
+    if (result.error) {
+      return res.status(400).json({ message: result.error.details[0].message });
+    }
+    next();
+  };
 };
 
 module.exports = {
-    validateBody,
-    validateParams,
-    schemas
+  schemas,
+  validateBody,
+  validateParams
 };

@@ -4,7 +4,7 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const admin = require('../middleware/admin'); 
 // Route pour l'inscription
-router.post('/register', admin, authController.register);
+router.post('/register', authController.register);
 
 // Route pour la connexion
 router.post('/login', authController.login);

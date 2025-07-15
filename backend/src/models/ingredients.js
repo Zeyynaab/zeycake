@@ -1,44 +1,14 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../database');
+// models/Ingredient.js
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-class Ingredient extends Model {}
+const ingredientSchema = new Schema({
+  nom: { type: String, required: true },
+  unite: { type: String, required: true },
+  prix: { type: Number, required: true },
+  fournisseur: String,
+  stock: { type: Number, default: 0 },
+  seuilAlerte: { type: Number, default: 5 },
+}, { timestamps: true });
 
-Ingredient.init({
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  nom: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  unite: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  prix: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  fournisseur: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  stock: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-  seuilAlerte: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 5,
-  },
-}, {
-  sequelize,
-  modelName: 'Ingredient',
-  timestamps: true, // Ajoute createdAt et updatedAt automatiquement
-});
-
-module.exports = Ingredient;
+module.exports = mongoose.model('Ingredient', ingredientSchema);

@@ -1,0 +1,206 @@
+/* ===================== DASHBOARD ADMIN ===================== */
+
+/* Conteneur général pour chaque page admin */
+.admin-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Avenir Next", sans-serif;
+}
+
+/* Titre des pages */
+.admin-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #5a2c1a;
+  text-align: center;
+}
+
+/* ====== FORMULAIRES : Ajout / Modification d’éléments ====== */
+.admin-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+  background-color: #fff7f3;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.admin-form input,
+.admin-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1 1 220px;
+  font-family: "Avenir Next", sans-serif;
+}
+
+.admin-form button {
+  background-color: #efb9a7;
+  color: #3d1f13;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.admin-form button:hover {
+  background-color: #eaa993;
+}
+
+/* ========== TABLEAUX DE GESTION ========= */
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: "Avenir Next", sans-serif;
+}
+
+.admin-table th,
+.admin-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.admin-table th {
+  background-color: #ffe9e3;
+  color: #3d1f13;
+}
+
+.admin-table tr:nth-child(even) {
+  background-color: #fff6f1;
+}
+
+/* ========== BOUTONS DANS LE TABLEAU ========== */
+
+.admin-table button {
+  margin-right: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+
+/* Boutons modifier / supprimer */
+.btn-edit {
+  background-color: #7c9c3e;
+}
+.btn-edit:hover {
+  background-color: #6c8a32;
+}
+
+.btn-delete {
+  background-color: #d9534f;
+}
+.btn-delete:hover {
+  background-color: #c9302c;
+}
+
+/* ====== MESSAGES DE VALIDATION / ERREUR ====== */
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+}
+
+/* ========== RESPONSIVE POUR PETITS ÉCRANS ========== */
+@media screen and (max-width: 768px) {
+  .admin-form {
+    flex-direction: column;
+  }
+
+  .admin-form input,
+  .admin-form select {
+    width: 100%;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    font-size: 14px;
+  }
+
+  .admin-table {
+    overflow-x: auto;
+    display: block;
+  }
+}
+/* ========== HOME ========== */
+
+.admin-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.admin-links a {
+  padding: 12px 24px;
+  background-color: #ffe9e3;
+  border-radius: 10px;
+  color: #5a2c1a;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.admin-links a:hover {
+  background-color: #fcd3c7;
+}
+
+/* ========== ADMIN NAVBAR ========== */
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2c3e50;
+  padding: 10px 20px;
+  color: white;
+}
+
+.admin-navbar-logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.admin-navbar-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.admin-navbar-links li a {
+  color: white;
+  text-decoration: none;
+}
+
+.admin-navbar-switch {
+  background-color: #e67e22;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}

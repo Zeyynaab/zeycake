@@ -1,7 +1,12 @@
-const express = require('express');
+/* const express = require('express');
 const { validateBody, validateParams, schemas } = require('../middleware/validation');
 const clientsController = require('../controllers/clientsController'); // Importer le contrôleur
 const router = express.Router();
+const authController = require('../controllers/authController');
+
+router.post('/auth/register', authController.register);
+router.post('/auth/login', authController.login);
+
 
 // GET /api/clients - Récupérer tous les clients
 router.get('/', clientsController.getAllClients);
@@ -21,4 +26,4 @@ router.delete('/:id', validateParams(schemas.id), clientsController.deleteClient
 // GET /api/clients/:id/commandes - Récupérer les commandes d'un client
 router.get('/:id/commandes', validateParams(schemas.id), clientsController.getClientCommandes);
 
-module.exports = router;
+module.exports = router; */

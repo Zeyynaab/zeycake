@@ -1,17 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+//console.log('🧪 CONTENU DE userController :', userController);
+const verifyToken = require('../middleware/auth');
+const { validateBody, schemas } = require('../middleware/validation');
 
-//router.get('/', userController.getAllUsers);
+
+// Récupérer les utilisateurs filtrés par rôle (ex: ?role=client)
+router.get('/', verifyToken, userController.getUsersByRole);
 
 // Obtenir le profil utilisateur actuel
-router.get('/profile', require('../middleware/auth'), userController.getProfile);
+router.get('/profile', verifyToken, userController.getProfile);
 
 // Mettre à jour un utilisateur
-router.put('/:id', require('../middleware/auth'), validateBody(schemas.update), userController.updateUser);
+router.put('/:id', verifyToken, validateBody(schemas.update), userController.updateUser);
 
 // Supprimer un utilisateur
-router.delete('/:id', require('../middleware/auth'), userController.deleteUser);
+router.delete('/:id', verifyToken, userController.deleteUser);
+
+
+//router.get('/clients', verifyToken, userController.getAllClients);
 
 
 module.exports = router;
