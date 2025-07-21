@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../style/global.css';
 import PageBanner from '../components/PageBanner';
+import { FaTrashAlt } from 'react-icons/fa';
+
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     setUser(storedUser);
@@ -21,9 +24,18 @@ const Cart = () => {
 
   const handleClearCart = () => {
     if (user) {
-      localStorage.removeItem(`cart_${user._id}`); // ✅ supprimer le panier de cet utilisateur
+      localStorage.removeItem(`cart_${user._id}`);
     }
     setCart([]);
+  };
+
+  // ✅ Fonction pour supprimer un article spécifique
+  const handleRemoveItem = (indexToRemove) => {
+    const newCart = cart.filter((_, index) => index !== indexToRemove);
+    setCart(newCart);
+    if (user) {
+      localStorage.setItem(`cart_${user._id}`, JSON.stringify(newCart));
+    }
   };
 
   return (
@@ -50,6 +62,16 @@ const Cart = () => {
                     <p>Quantité : {item.quantity}</p>
                     <p>{item.prix * item.quantity} $</p>
                   </div>
+                  
+                  {/* ✅ Poubelle pour supprimer l'article */}
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleRemoveItem(index)}
+                    aria-label="Supprimer l'article"
+                  >
+                    <FaTrashAlt className="icon-trash" />
+                  </button>
+
                 </li>
               ))}
             </ul>

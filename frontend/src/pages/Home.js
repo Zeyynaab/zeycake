@@ -32,30 +32,32 @@ const Home = () => {
       </header>
 
       {/* SECTION À PROPOS */}
-      <section className="about-section">
-        <div className="about-content" data-aos="fade-right">
-          <h2>À propos de ZeyCake</h2>
-          <p>
-            ZeyCake est une maison de pâtisserie artisanale née d’une passion sincère pour l’art du goût, de la précision et de l’élégance. 
-            Derrière chaque création, il y a moi, Zeïnab 
-            — fondatrice et pâtissière — animée par le désir de sublimer vos instants de vie à travers des douceurs uniques, raffinées et généreuses.
+      <section className="about-line">
+  <div className="about-line-wrapper">
+    <div className="about-col" data-aos="fade-right">
+      <img src="/images/about.jpg" alt="Préparation gâteau" />
+    </div>
+    <div className="about-col" data-aos ="fade-up">
+      <div className="about-text-box">
+        <h2>À propos de <span>ZeyCake</span></h2>
+        <p>
+          ZeyCake est une maison de pâtisserie artisanale née d’une passion sincère pour l’art du goût, de la précision et de l’élégance.
+          <br /><br />
+          Derrière chaque création, il y a moi, <strong>Zeïnab</strong>, fondatrice et pâtissière — animée par le désir de sublimer vos instants de vie à travers des douceurs uniques, raffinées et généreuses.
+          <br /><br />
+          Ma vision ? Offrir bien plus qu’un simple dessert. Je veux créer une expérience. Une émotion. Un souvenir.
+        </p>
+        <p className="founder-signature">– Zeïnab, Fondatrice</p>
+      </div>
+    </div>
+    <div className="about-col" data-aos ="fade-left">
+      <img src="/images/fruits2.jpg" alt="Tarte aux fruits rouges" />
+    </div>
+  </div>
+</section>
 
-            Chez ZeyCake, chaque réalisation est pensée avec exigence et créativité. Des gâteaux sur-mesure aux cupcakes soigneusement décorés, en passant par les douceurs traditionnelles revisitées,
-            tout est fait maison, avec des ingrédients de qualité, une attention portée aux détails, et une véritable volonté de marquer les esprits.
 
-            Ma vision ? Offrir bien plus qu’un simple dessert. Je veux créer une expérience. Une émotion. Un souvenir. 
-            Qu’il s’agisse d’un événement marquant comme un mariage, une baby shower, un anniversaire, ou simplement l’envie de se faire plaisir, 
-            ZeyCake s’engage à offrir un service personnalisé, réactif et professionnel.
 
-            Chaque commande est traitée avec rigueur et passion, dans le respect des normes d’hygiène et de qualité. 
-            Votre satisfaction est au cœur de ma démarche.
-            Bienvenue dans l’univers ZeyCake — là où la gourmandise rencontre l’élégance.
-          </p>
-        </div>
-        <div className="about-image" data-aos="fade-left">
-          <img src="/images/about.jpg" alt="Gâteau élégant" />
-        </div>
-      </section>
 
       {/* PRODUITS VEDETTES */}
       <section className="featured-products">

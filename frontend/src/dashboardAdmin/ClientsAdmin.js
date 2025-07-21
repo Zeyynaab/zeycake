@@ -20,11 +20,7 @@ function ClientsAdmin() {
 
   const fetchClients = async () => {
     try {
-      const res = await API.get('/users?role=client', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const res = await API.get('/users?role=client');
       setClients(res.data);
     } catch (err) {
       console.error('Erreur lors du chargement des clients :', err);
@@ -50,11 +46,7 @@ function ClientsAdmin() {
   const handleDelete = async (id) => {
     if (window.confirm('Supprimer ce client ?')) {
       try {
-        await API.delete(`/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+        await API.delete(`/users/${id}`);
         fetchClients();
       } catch (err) {
         console.error(err);
@@ -71,12 +63,7 @@ function ClientsAdmin() {
     const method = isEditing ? 'put' : 'post';
 
     try {
-      await API[method](url, dataToSend, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-
+      await API[method](url, dataToSend);
       setFormData({
         nom: '',
         prenom: '',

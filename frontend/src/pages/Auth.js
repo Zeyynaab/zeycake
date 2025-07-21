@@ -1,3 +1,4 @@
+// ✅ Auth.js (client)
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/global.css';
@@ -6,7 +7,6 @@ import { login, register } from '../api/api';
 
 const Auth = () => {
   const navigate = useNavigate();
-
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [registerNom, setRegisterNom] = useState('');
@@ -20,25 +20,29 @@ const Auth = () => {
     setTimeout(() => setNotification(null), 3500);
   };
 
-  // Connexion
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await login({
-        email: loginEmail,
-        password: loginPassword,
-      });
-
+      const res = await login({ email: loginEmail, password: loginPassword });
       const data = res.data;
-      const user = data.user;
+
+      const user = {
+        _id: data._id,
+        email: data.email,
+        nom: data.nom,
+        prenom: data.prenom,
+        role: data.role,
+        token: data.token
+      };
 
       if (!user) {
         showNotification("Erreur : utilisateur non trouvé", "error");
         return;
       }
-
+      localStorage.removeItem('admin'); //NEW
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', data.token);
+     // localStorage.setItem('token', data.token);
+      
 
       const savedCart = localStorage.getItem(`cart_${user._id}`);
       if (savedCart) {
@@ -50,11 +54,7 @@ const Auth = () => {
       showNotification('Connexion réussie !', 'success');
 
       setTimeout(() => {
-        if (user.role === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/');
-        }
+        navigate('/');
       }, 1000);
     } catch (err) {
       console.error('Erreur :', err);
@@ -62,7 +62,6 @@ const Auth = () => {
     }
   };
 
-  // Inscription
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -101,7 +100,6 @@ const Auth = () => {
       <div className="auth-container">
         <h1 className="auth-title">Connexion / Inscription</h1>
 
-        {/* ✅ Notification message */}
         {notification && (
           <div className={`notification ${notification.type}`}>
             {notification.message}
@@ -109,7 +107,6 @@ const Auth = () => {
         )}
 
         <div className="auth-boxes">
-          {/* Connexion */}
           <div className="auth-box">
             <h2>Connexion</h2>
             <form onSubmit={handleLogin}>
@@ -132,7 +129,6 @@ const Auth = () => {
             </form>
           </div>
 
-          {/* Inscription */}
           <div className="auth-box">
             <h2>Inscription</h2>
             <form onSubmit={handleRegister}>
@@ -169,12 +165,19 @@ const Auth = () => {
           </div>
         </div>
 
-        {/* ✅ Bouton Se déconnecter si connecté */}
         {localStorage.getItem('user') && (
           <div style={{ textAlign: 'center', marginTop: '30px' }}>
             <button onClick={handleLogout} className="btn-secondary">
               Se déconnecter
             </button>
+
+            {JSON.parse(localStorage.getItem('user')).role === 'admin' && (
+              <div style={{ marginTop: '10px' }}>
+                <button className="btn-secondary" onClick={() => navigate('/admin')}>
+                  Accéder au Dashboard Admin
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -16,18 +16,27 @@ const ProductDetail = () => {
   }, [id]);
 
   const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const updatedCart = [...cart, { ...product, quantity }];
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) {
+    alert("Veuillez vous connecter pour ajouter au panier.");
+    return;
+  }
 
-    // ✅ Sauvegarde liée à l'utilisateur
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      localStorage.setItem(`cart_${user._id}`, JSON.stringify(updatedCart));
-    }
+  const cartKey = `cart_${user._id}`;
+  const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-    alert('Produit ajouté au panier');
-  };
+  // Vérifier si le produit existe déjà
+  const index = cart.findIndex(item => item._id === product._id);
+  if (index !== -1) {
+    cart[index].quantity += quantity;
+  } else {
+    cart.push({ ...product, quantity });
+  }
+
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+  alert('Produit ajouté au panier');
+};
+
 
   if (!product) return <p>Chargement...</p>;
 

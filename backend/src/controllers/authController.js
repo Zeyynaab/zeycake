@@ -53,8 +53,17 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
-    console.log("Connexion réussie, token généré"); //enlever
-    res.status(200).json({ token, user });
+    console.log("Token généré:", token); //enlever
+    //res.status(200).json({ token, user }); 
+    //NEW 
+    res.status(200).json({
+      _id: user._id,
+      email: user.email,
+      nom: user.nom,
+      prenom: user.prenom,
+      role: user.role,
+      token,
+    }); //FIN NEW
   } catch (err) {
     console.error("💥 Erreur serveur dans /login :", err); 
     res.status(500).json({ message: 'Erreur serveur', error: err.message });

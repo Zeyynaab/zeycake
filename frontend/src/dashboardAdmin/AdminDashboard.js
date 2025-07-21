@@ -4,18 +4,18 @@ import './Dashboard.css';
 
 function AdminDashboard() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user')); // ou ton useContext auth
+  const admin = JSON.parse(localStorage.getItem('admin')); // ou ton useContext auth
 
-  useEffect(() => {
-    if (!user || user.role !== 'admin') {
-      navigate('/'); // Redirige vers l'accueil si pas admin
+  /* useEffect(() => {
+    if (!admin || admin.role !== 'admin') {
+      navigate('/admin/login'); // Redirige vers l'accueil si pas admin
     }
-  }, [user, navigate]);
+  }, [admin, navigate]); */
 
   return (
     <div className="admin-dashboard">
       <h1>Tableau de Bord Admin</h1>
-      <p>Bienvenue, {user?.nom} 👋</p>
+      <p>Bienvenue, {admin?.nom} 👋</p>
 
       <div className="admin-links">
         <Link to="/admin/produits">🧁 Gérer les Produits</Link>

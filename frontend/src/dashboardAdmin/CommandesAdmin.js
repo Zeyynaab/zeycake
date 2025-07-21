@@ -11,22 +11,17 @@ function CommandesAdmin() {
   }, []);
 
   const fetchCommandes = async () => {
-  try {
-    const res = await fetchCommandesAdmin(); 
-    setCommandes(res.data);
-  } catch (err) {
-    console.error('Erreur lors du chargement des commandes :', err);
-  }
-};
-
+    try {
+      const res = await fetchCommandesAdmin(); 
+      setCommandes(res.data);
+    } catch (err) {
+      console.error('Erreur lors du chargement des commandes :', err);
+    }
+  };
 
   const updateStatut = async (id, newStatut) => {
     try {
-      await API.put(`/commandes/${id}/statut`, { statut: newStatut }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      await API.put(`/commandes/${id}/statut`, { statut: newStatut });
       fetchCommandes();
     } catch (err) {
       console.error('Erreur lors de la mise à jour du statut :', err);
@@ -36,11 +31,7 @@ function CommandesAdmin() {
   const handleDelete = async (id) => {
     if (window.confirm('Supprimer cette commande ?')) {
       try {
-        await API.delete(`/commandes/${id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+        await API.delete(`/commandes/${id}`);
         fetchCommandes();
       } catch (err) {
         console.error('Erreur lors de la suppression :', err);

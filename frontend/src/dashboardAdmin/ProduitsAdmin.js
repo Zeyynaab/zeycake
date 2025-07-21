@@ -112,18 +112,18 @@ function ProduitsAdmin() {
         <input type="number" name="prix" placeholder="Prix" value={formData.prix} onChange={handleChange} required />
         <input type="text" name="categorie" placeholder="Catégorie" value={formData.categorie} onChange={handleChange} required />
 
+
+        <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+        <div className="checkbox-group">
         <label className="checkbox-label">
           <input type="checkbox" name="disponible" checked={formData.disponible} onChange={handleChange} />
           Disponible
         </label>
-
         <label className="checkbox-label">
           <input type="checkbox" name="vedette" checked={formData.vedette} onChange={handleChange} />
           Produit vedette
         </label>
-
-        <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
-
+        </div>
         <button type="submit">{isEditing ? 'Mettre à jour' : 'Ajouter'}</button>
       </form>
 

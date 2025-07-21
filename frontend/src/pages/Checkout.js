@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/global.css';
 import axios from 'axios';
+import { passerCommande } from '../api/api'; // ✅ NEW
+
 
 const Checkout = () => {
   const [cart, setCart] = useState([]);
@@ -54,12 +56,8 @@ const Checkout = () => {
       //console.log("🔐 TOKEN utilisé :", localStorage.getItem('token'));
       //console.log("📦 Données commande :", commande);
 
-      const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5050/api/commandes', commande, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await passerCommande(commande);
+
     //vider le panier specifique a l'user
       localStorage.removeItem(`cart_${user._id}`);
       setCart([]);

@@ -105,6 +105,13 @@ const start = async () => {
         password: hash,
         role: 'admin'
       });
+    } else { //NEW
+  // 🛠 Assure qu'il est admin même s'il existe déjà
+      if (admin.role !== 'admin') {
+        admin.role = 'admin';
+        await admin.save();
+        console.log('✅ Rôle admin mis à jour pour l’utilisateur existant');
+      }
     }
 
     // ✅ Démarrer le serveur

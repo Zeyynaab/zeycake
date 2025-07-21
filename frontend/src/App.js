@@ -11,15 +11,15 @@ import './style/global.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AdminNavbar from './components/AdminNavbar';
-
-
+import AdminRoute from './components/AdminRoute'; //new path admin
+import AdminLogin from './dashboardAdmin/AdminLogin';
 //Import pages admin
-import ClientsAdmin from './dashboardAdmin/ClientsAdmin';
+/* import ClientsAdmin from './dashboardAdmin/ClientsAdmin';
 import CommandesAdmin from './dashboardAdmin/CommandesAdmin';
 import ProduitsAdmin from './dashboardAdmin/ProduitsAdmin';
 import IngredientsAdmin from './dashboardAdmin/IngredientsAdmin';
 import AdminDashboard from './dashboardAdmin/AdminDashboard';
-
+ */
 
 const AppContent = () => {
   const location = useLocation();
@@ -27,8 +27,12 @@ const AppContent = () => {
   //const showHeader = location.pathname !== '/';
     return (
       <>
-      {!isAdminPage && location.pathname !== '/' && <Header />}
-      {isAdminPage && <AdminNavbar />}
+      {/*{!isAdminPage && location.pathname !== '/' && <Header />} */}
+      {!isAdminPage && !['/', '/auth'].includes(location.pathname) && <Header />}
+
+      {isAdminPage && location.pathname !== '/admin/login' && <AdminNavbar />}
+
+
 
       {/* {showHeader && <Header />} */}
             <Routes>
@@ -43,12 +47,13 @@ const AppContent = () => {
 
                 {/**Coté admin */}
                 {/* Dashboard admin */}
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/admin/clients" element={<ClientsAdmin />} />
-                <Route path="/admin/commandes" element={<CommandesAdmin />} />
-                <Route path="/admin/produits" element={<ProduitsAdmin />} />
-                <Route path="/admin/ingredients" element={<IngredientsAdmin />} />
-             </Routes>
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin" element={<AdminRoute page="dashboard" />} />
+                <Route path="/admin/clients" element={<AdminRoute page="clients" />} />
+                <Route path="/admin/commandes" element={<AdminRoute page="commandes" />} />
+                <Route path="/admin/produits" element={<AdminRoute page="produits" />} />
+                <Route path="/admin/ingredients" element={<AdminRoute page="ingredients" />} />
+                </Routes>
             {!isAdminPage && <Footer />}
             
 
