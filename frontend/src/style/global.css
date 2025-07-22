@@ -661,6 +661,36 @@ ul {
   margin-top: 0;
   font-family: "Avenir Next", sans-serif;
 }
+/*FILTRE PRODUITS */
+
+.filter-bar {
+  margin: 2rem auto;
+  max-width: 300px;
+  text-align: center;
+}
+
+.filter-bar label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.filter-bar select {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: border-color 0.2s ease;
+}
+
+.filter-bar select:focus {
+  border-color: #ff99cc;
+  outline: none;
+}
 
 
 /* ProductsDetail */
