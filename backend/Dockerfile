@@ -1,6 +1,6 @@
-#FROM node:18
+FROM node:18
 #pour mon mac M3 , lautre etait intel 
-FROM --platform=linux/arm64 node:18 
+#FROM --platform=linux/arm64 node:18 
 
 
 WORKDIR /usr/src/app
