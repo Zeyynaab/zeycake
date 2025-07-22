@@ -1,6 +1,6 @@
 import React from 'react';
 import '../style/global.css';
-import axios from 'axios';
+import API from '../api/api';
 
 const OrderItem = ({ order, onDelete }) => {
   const handleDelete = async () => {
@@ -9,7 +9,7 @@ const OrderItem = ({ order, onDelete }) => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5050/api/commandes/${order._id}`, {
+      await API.delete(`/commandes/${order._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

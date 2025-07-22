@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import AdminLogin from '../dashboardAdmin/AdminLogin';
+//import AdminLogin from '../dashboardAdmin/AdminLogin';
 import AdminDashboard from '../dashboardAdmin/AdminDashboard';
 import ClientsAdmin from '../dashboardAdmin/ClientsAdmin';
 import CommandesAdmin from '../dashboardAdmin/CommandesAdmin';

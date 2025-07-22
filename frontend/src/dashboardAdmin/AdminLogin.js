@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
+import API from '../api/api';
+//const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050';
+
 
 function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -12,19 +15,8 @@ function AdminLogin() {
   const handleConnexion = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5050/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-      //debogue 
-      console.log("Réponse login admin :", data);
-
-      if (!res.ok) {
-        throw new Error(data.message || 'Erreur de connexion');
-      }
+      const res = await API.post('/auth/login', { email, password });
+      const data = res.data;
 
       if (data.role !== 'admin') {
         throw new Error("Accès refusé. Vous n'êtes pas administrateur.");

@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import '../style/global.css';
 import { fetchProduitById } from '../api/api';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050';
+
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -42,8 +44,8 @@ const ProductDetail = () => {
 
   return (
     <div className="product-detail">
-      <img src={`http://localhost:5050/uploads/${product.image}`} alt={product.nom} className="detail-image" />
-      <div className="detail-info">
+      <img src={`${API_URL}/uploads/${product.image}`} alt={product.nom} className="detail-image" />
+       <div className="detail-info">
         <h2>{product.nom}</h2>
         <p className="detail-description">{product.description}</p>
         <p className="detail-price">{product.prix} $</p>

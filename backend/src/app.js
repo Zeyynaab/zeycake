@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const connectMongo = require('../config/mongoose'); // 🔁 connexion Mongo
+const connectMongo = require('../config/mongoose'); // connexion Mongo
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -18,8 +18,20 @@ const Ingredient = require('./models/ingredients');
 const app = express();
 
 // Autoriser le frontend React
+const allowedOrigins = [
+  'http://localhost:3000', // local
+  process.env.FRONTEND_URL // production
+];
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: function (origin, callback) {
+    // autoriser aussi les requêtes directes sans origin (ex: Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
@@ -116,11 +128,11 @@ const start = async () => {
 
     // ✅ Démarrer le serveur
     app.listen(PORT, () => {
-      console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+      console.log(`Serveur démarré sur ${PORT}`);
     });
 
   } catch (error) {
-    console.error('❌ Erreur lors du démarrage :', error);
+    console.error('Erreur lors du démarrage :', error);
   }
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/global.css';
-import axios from 'axios';
+//import axios from 'axios';
 import { passerCommande } from '../api/api'; // ✅ NEW
 
 

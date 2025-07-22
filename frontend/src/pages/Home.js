@@ -6,6 +6,9 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050';
+
+
 const Home = () => {
   //nouveau
   const [vedettes, setVedettes] = useState([]);
@@ -14,7 +17,7 @@ const Home = () => {
     AOS.init({ duration: 1000 });
 
     // ✅ Chargement des produits vedettes depuis le backend
-    axios.get('http://localhost:5050/api/produits/vedettes')
+    axios.get(`${API_URL}/api/produits/vedettes`)
       .then(res => setVedettes(res.data))
       .catch(err => console.error('Erreur chargement vedettes', err));
   }, []);
@@ -66,9 +69,10 @@ const Home = () => {
           {vedettes.slice(0, 4).map((produit, index) => (
             <div className="product-card" data-aos="zoom-in" key={index}>
               <img
-                src={produit.image ? `http://localhost:5050/uploads/${produit.image}` : '/images/default.jpg'}
+                src={produit.image ? `${API_URL}/uploads/${produit.image}` : '/images/default.jpg'}
                 alt={produit.nom}
-            /><p>{produit.nom}<br />{produit.prix} $</p>
+              />
+            <p>{produit.nom}<br />{produit.prix} $</p>
             </div>
           ))}
         </div>

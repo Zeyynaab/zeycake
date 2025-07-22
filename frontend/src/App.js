@@ -28,7 +28,8 @@ const AppContent = () => {
     return (
       <>
       {/*{!isAdminPage && location.pathname !== '/' && <Header />} */}
-      {!isAdminPage && !['/', '/auth'].includes(location.pathname) && <Header />}
+      {/*{!isAdminPage && !['/', '/auth'].includes(location.pathname) && <Header />}*/}
+      {!isAdminPage && location.pathname !== '/' && <Header />}
 
       {isAdminPage && location.pathname !== '/admin/login' && <AdminNavbar />}
 
