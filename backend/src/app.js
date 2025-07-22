@@ -62,7 +62,8 @@ const ingredientsRoutes = require('./routes/ingredients');
 // Routes publiques
 app.use('/uploads', express.static('uploads', {
   setHeaders: (res, path) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'https://heartfelt-cendol-7cd5c1.netlify.app');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   }
 }));
