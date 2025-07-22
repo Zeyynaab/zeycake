@@ -20,7 +20,7 @@ const app = express();
 // Autoriser le frontend React
 const allowedOrigins = [
   'http://localhost:3000', // local
-  process.env.FRONTEND_URL // production
+  'https://heartfelt-cendol-7cd5c1.netlify.app' // production
 ];
 
 app.use(cors({
