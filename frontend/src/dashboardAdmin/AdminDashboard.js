@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+//import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Dashboard.css';
 
 function AdminDashboard() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const admin = JSON.parse(localStorage.getItem('admin')); // ou ton useContext auth
 
   /* useEffect(() => {
