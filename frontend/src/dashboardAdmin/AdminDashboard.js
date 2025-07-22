@@ -1,5 +1,5 @@
 //import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 import './Dashboard.css';
 
 function AdminDashboard() {
