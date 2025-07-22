@@ -4,6 +4,7 @@ import '../style/global.css';
 import PageBanner from '../components/PageBanner';
 import { FaTrashAlt } from 'react-icons/fa';
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050';
+const BASE_URL = API_URL.replace('/api', '');
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -57,8 +58,8 @@ const Cart = () => {
             <ul className="cart-list">
               {cart.map((item, index) => (
                 <li key={index} className="cart-item">
-                  <img src={`${API_URL}/uploads/${item.image}`} alt={item.nom} className="cart-image" />
-              <div>
+                  <img src={`${BASE_URL}/uploads/${item.image}`} alt={item.nom} className="cart-image" />
+                <div>
                     <h4>{item.nom}</h4>
                     <p>Quantité : {item.quantity}</p>
                     <p>{item.prix * item.quantity} $</p>

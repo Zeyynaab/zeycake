@@ -7,6 +7,7 @@ import 'aos/dist/aos.css';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050/api';
+const BASE_URL = API_URL.replace('/api', '');
 
 
 const Home = () => {
@@ -69,7 +70,7 @@ const Home = () => {
           {vedettes.slice(0, 4).map((produit, index) => (
             <div className="product-card" data-aos="zoom-in" key={index}>
               <img
-                src={produit.image ? `${API_URL}/uploads/${produit.image}` : '/images/default.jpg'}
+                src={produit.image ? `${BASE_URL}/uploads/${produit.image}` : '/images/default.jpg'}
                 alt={produit.nom}
               />
             <p>{produit.nom}<br />{produit.prix} $</p>

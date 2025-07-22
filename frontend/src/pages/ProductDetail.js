@@ -5,6 +5,7 @@ import '../style/global.css';
 import { fetchProduitById } from '../api/api';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050';
+const BASE_URL = API_URL.replace('/api', '');
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -44,7 +45,7 @@ const ProductDetail = () => {
 
   return (
     <div className="product-detail">
-      <img src={`${API_URL}/uploads/${product.image}`} alt={product.nom} className="detail-image" />
+      <img src={`${BASE_URL}/uploads/${product.image}`} alt={product.nom} className="detail-image" />
        <div className="detail-info">
         <h2>{product.nom}</h2>
         <p className="detail-description">{product.description}</p>
