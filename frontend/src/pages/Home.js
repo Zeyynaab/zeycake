@@ -6,7 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050/api';
 
 
 const Home = () => {
@@ -17,7 +17,7 @@ const Home = () => {
     AOS.init({ duration: 1000 });
 
     // ✅ Chargement des produits vedettes depuis le backend
-    axios.get(`${API_URL}/api/produits/vedettes`)
+    axios.get(`${API_URL}/produits/vedettes`)
       .then(res => setVedettes(res.data))
       .catch(err => console.error('Erreur chargement vedettes', err));
   }, []);
