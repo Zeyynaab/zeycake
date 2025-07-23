@@ -189,8 +189,12 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 30px;
-  background-color: white; /*avant ffe9e3*/
+  background-color: white; /*avant #ffe9e3;*/
+  padding: 0px 30px; /*avant 20px 40px;*/
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid white; /*avant ffe9e3*/
 }
 
 /*AFFICHER LE NOM DU CLIENT SUR LES PAGES NAVBAR(Home) ET HEADER(other page) */
@@ -245,6 +249,7 @@ ul {
   pointer-events: none;
   z-index: 1000;
   min-width: 160px;
+  margin-top: -4px;
 }
 
 .dropdown:hover .dropdown-content,
@@ -256,7 +261,7 @@ ul {
 }
 
 /* responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .menu-toggle {
     display: block;
     position: absolute;
@@ -605,91 +610,227 @@ ul {
 
 /* Produits */
 
-.produits-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px; /* espace entre les cartes */
-  justify-content: center;
-  padding: 30px;
-  margin-top: 40px; /*espace entre la banniere et les produits*/
-  }
+/* ============================= */
+/* 📦 Grille Produits (style ÔFauria amélioré) */
+/* ============================= */
 
-.produit-card {
-  width: 300px;
-  height: auto; /*avant auto*/
-  padding: 0;
-  background: transparent;
-  border-radius: 0 !important;
-  overflow: hidden;
-  box-shadow: none;
+.products-wrapper {
+  display: grid;
+  grid-template-columns: 280px 1fr; /*avant 240px 1fr*/
+  gap: 100px; /*avant 30*/
+  max-width: 1200px;
+  margin: 40px auto 0 auto; /* espacement avec la bannière */
+  padding: 0 24px; /*avant 20 px*/
+  
+  
 }
 
 .produits-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 blocs fixes sur desktop */
+  gap: 32px;
   justify-content: center;
-  gap:5px; /*espace entre les images*/ 
-  }
+  width: 100%;
+}
 
-.produit-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
+.produit-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .produit-image {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* garantit que c’est un carré */
   object-fit: cover;
   border-radius: 0 !important;
 }
 
 .product-name {
-  font-size: 12px;
-  margin: 8px 0 4px 0;
+  font-size: 14px;
   font-weight: normal;
   text-align: left;
   font-family: "Avenir Next", sans-serif;
-  margin-bottom: 4px; 
+  margin: 8px 0 4px 0;
   color: black;
 }
 
 .product-price {
-  font-size: 12px;
-  color: black; /*avant #333*/
+  font-size: 14px;
+  color: black;
   text-align: left;
-  margin-top: 0;
   font-family: "Avenir Next", sans-serif;
 }
-/*FILTRE PRODUITS */
 
-.filter-bar {
-  margin: 2rem auto;
-  max-width: 300px;
-  text-align: center;
+
+/* ============================= */
+/* 🧊 Sidebar filtres à gauche */
+/* ============================= */
+
+.filter-sidebar {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+  font-family: "Avenir Next", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /*taille du bloc filtre*/
+  width: 300px;
+  margin-left: -5px;
+  padding-left: 30px;
+  min-width: 240px;
+ 
 }
 
-.filter-bar label {
-  display: block;
+.filter-sidebar h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  color: #444;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 6px;
+}
+
+.filter-sidebar label {
+  font-size: 14px;
+  margin-bottom: 5px;
   color: #333;
 }
 
-.filter-bar select {
-  width: 100%;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 8px;
+.filter-sidebar select,
+.filter-sidebar input {
+  padding: 6px 10px;
+  font-size: 13px;
   border: 1px solid #ccc;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: border-color 0.2s ease;
+  border-radius: 4px;
+  font-family: "Avenir Next", sans-serif;
 }
 
-.filter-bar select:focus {
-  border-color: #ff99cc;
-  outline: none;
+
+/* ============================= */
+/* 📱 Responsive (tablette/mobile) */
+/* ============================= */
+
+/* .filter-toggle-mobile {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.filter-toggle-mobile button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+} */
+
+.filter-toggle-mobile {
+  display: none;
+  margin: 0 auto;
+  width: 100%;
+  background-color: #333;
+  padding: 14px 0;
+  text-align: center;
+}
+
+.filter-toggle-mobile button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Avenir Next", sans-serif;
+  width: 100%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .products-wrapper {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+    padding-bottom: 70px;
+  }
+
+  .filter-sidebar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  padding: 30px 20px 90px;
+  overflow-y: auto;
+  z-index: 999;
+  transform: translateY(100%);
+  transition: transform 0.35s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  transform: translateY(100%);
+  transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+.filter-sidebar.visible {
+  transform: translateY(0%);
+}
+
+
+  .filter-sidebar h3 {
+    display: block;
+  font-size: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 8px;
+  text-align: center;
+  }
+
+  .filter-toggle-mobile {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100; /*avant 1100*/
+  background: #222;
+  padding: 16px 0;
+  text-align: center;
+  }
+
+  .filter-toggle-mobile button {
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  }
+
+  .filter-sidebar > div {
+    margin-bottom: 16px;
+  }
+
+  .produits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+
+
 }
 
 
@@ -699,6 +840,8 @@ ul {
   gap: 2rem;
   padding: 2rem;
   align-items: flex-start;
+  flex-wrap: nowrap;
+  overflow: auto;
 }
 
 .detail-image {
@@ -707,11 +850,25 @@ ul {
 }
 
 .detail-info {
-  max-width: 500px;
+  max-width: 600px;
+  text-align: left;
+  font-family: "Avenir Next", sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #3d1f13;
+  padding: 0 10px;
+}
+
+.detail-info h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #3d1f13;
 }
 
 .detail-description {
-  margin: 1rem 0;
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
 }
 
 .detail-price {
@@ -736,6 +893,24 @@ ul {
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  .product-detail {
+    flex-direction: column;
+    padding: 1rem;
+    /* align-items: center; */
+    /* padding: 10px; */
+  }
+  .detail-info {
+    text-align: left;
+    padding: 0 1rem;
+  }
+
+  .detail-image {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 /*Cart */
 .cart {
   padding: 2rem;
@@ -749,7 +924,7 @@ ul {
 
 .cart-btn {
   padding: 0.7rem 1.2rem;
-  background-color: #dd3b3b;
+  background-color: #c26442; /*avant ff7f50*/
   color: white;
   border: none;
   border-radius: 5px;
@@ -794,6 +969,16 @@ ul {
 .cart-actions {
   margin-top: 1rem;
 }
+
+.cart-btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+ color: #efb9a7;
+} 
+
 
 /*NEW bouton delete*/
 .delete-btn {
@@ -874,6 +1059,7 @@ ul {
   border-radius: 10px;
   text-align: left;
   background: #f9f9f9;
+  
 }
 
 
@@ -882,7 +1068,7 @@ ul {
 
 .auth-container {
   padding: 40px 20px;
-  background-color: #fff4ee;
+  background-color: white; /*avant #fff4ee */
   min-height: 100vh;
 }
 
@@ -929,7 +1115,7 @@ ul {
   border: 1px solid #ccc;
   background-color: #fefefe;
 }
-
+/*Bouton se connecter et s'inscrire */
 .btn-primary {
   background-color: #efb9a7;
   color: #3d1f13;
@@ -945,6 +1131,39 @@ ul {
 
 .btn-primary:hover {
   background-color: #eaa993;
+}
+/*Bouton se deconnecter et passer en mode admin*/
+.btn-secondary {
+  background-color: #efb9a7;
+  color: #3d1f13;
+  border: none;
+  padding: 12px;
+  margin-top: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  margin: 20px auto;   
+  width: fit-content;  
+  
+}
+
+.btn-secondary:hover {
+  background-color: #eaa993;
+} 
+
+.logout {
+  margin-bottom: -5px !important;
+}
+
+.btn-secondary {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  transform: scale(1.03);
+  /* background-color: rgba(0, 0, 0, 0.04); */
 }
 
 .forgot-password {
@@ -1038,21 +1257,123 @@ ul {
 /* ✅ Notification message (succès / erreur)  Page Auth*/
 .notification {
   margin: 10px auto 20px;
-  padding: 12px 18px;
+  padding: 10px 16px;
   border-radius: 8px;
-  max-width: 500px;
+  max-width: 480px;
   text-align: center;
   font-weight: 500;
   opacity: 0.95;
-  transition: opacity 0.3s ease;
+  font-size: 15px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  /*background-color: #fefefe;  fond très clair */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .notification.success {
-  background-color: #d4edda;
-  color: #155724;
+  color: #2e7d32; /* vert doux */
+  /*border-color: #dbe6db; contour léger*/
 }
 
 .notification.error {
-  background-color: #f8d7da;
-  color: #721c24;
+  color: #c62828; /* rouge doux */
+  border-color: #f5c6cb; /* contour léger */
+}
+
+/*NOTIF MESSAGE PAGE PRODUCTDETAILS*/
+.popup-notif {
+  margin: 0 auto 20px;
+  padding: 10px 16px;
+  max-width: 420px;
+  text-align: center;
+  /*background-color: rgba(255, 92, 92, 0.1); rouge pâle */
+  border-radius: 6px;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in-out;
+  transition: opacity 0.4s ease;
+  font-size: 15px;
+}
+
+.popup-notif.success {
+  /*background-color: rgba(40, 167, 69, 0.1);  vert pâle */
+  color: rgb(181, 237, 181);
+  border-color: #b9e6c2;
+}
+
+/* ❌ Message d’erreur (rouge) */
+.popup-notif.error {
+  /*background-color: rgba(255, 92, 92, 0.1);*/
+  color: rgb(244, 128, 128);
+  border-color: #ffc5c5;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*PAGE FAQ*/
+.faq-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.faq-title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 32px;
+  color: #5c2a07;
+}
+
+.faq-item {
+  border-bottom: 1px solid #e2d1c3;
+  padding: 15px 0;
+  cursor: pointer;
+}
+
+.faq-question {
+  font-family: "Georgia", serif;
+  font-size: 18px;
+  color: #b46b5c;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.faq-question:hover {
+  color: #a14c3a;
+}
+
+.faq-arrow {
+  font-size: 16px;
+}
+
+.faq-answer {
+  padding-top: 10px;
+  font-size: 16px;
+  color: #3d1f13;
+  line-height: 1.6;
+  animation: slideDown 0.3s ease;
+  font-family: "Avenir Next", sans-serif;
+}
+
+/* Animation douce */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

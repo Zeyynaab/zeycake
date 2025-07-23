@@ -1,27 +1,8 @@
 import React from 'react';
 import '../style/global.css';
-import API from '../api/api';
+//import API from '../api/api';
 
 const OrderItem = ({ order, onDelete }) => {
-  const handleDelete = async () => {
-    const confirmDelete = window.confirm("Supprimer cette commande ?");
-    if (!confirmDelete) return;
-
-    try {
-      const token = localStorage.getItem('token');
-      await API.delete(`/commandes/${order._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      alert('Commande supprimée avec succès.');
-      onDelete(order._id); // ✅ Appel ici pour supprimer visuellement
-    } catch (err) {
-      console.error('Erreur lors de la suppression :', err);
-      alert("Impossible de supprimer la commande");
-    }
-  };
 
   return (
     <div className="order-item">
@@ -39,9 +20,7 @@ const OrderItem = ({ order, onDelete }) => {
         ))}
       </ul>
       <p>Total : {order.total} $</p>
-
-      <button onClick={handleDelete} className="delete-btn">🗑️ Supprimer la commande</button>
-    </div>
+   </div>
   );
 };
 

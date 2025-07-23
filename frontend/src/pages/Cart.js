@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../style/global.css';
 import PageBanner from '../components/PageBanner';
 import { FaTrashAlt } from 'react-icons/fa';
+
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050';
 const BASE_URL = API_URL.replace('/api', '');
 
@@ -31,7 +32,6 @@ const Cart = () => {
     setCart([]);
   };
 
-  // ✅ Fonction pour supprimer un article spécifique
   const handleRemoveItem = (indexToRemove) => {
     const newCart = cart.filter((_, index) => index !== indexToRemove);
     setCart(newCart);
@@ -42,7 +42,7 @@ const Cart = () => {
 
   return (
     <>
-      <PageBanner image="/images/fruits-rouges.jpg" titre="Votre panier gourmand" sousTitre="Prêt à commander? "/>
+      <PageBanner image="/images/fruits-rouges.jpg" titre="Votre panier gourmand" sousTitre="Prêt à commander? " />
 
       <div className="cart">
         <h2>Mon Panier</h2>
@@ -59,13 +59,11 @@ const Cart = () => {
               {cart.map((item, index) => (
                 <li key={index} className="cart-item">
                   <img src={`${BASE_URL}/uploads/${item.image}`} alt={item.nom} className="cart-image" />
-                <div>
+                  <div>
                     <h4>{item.nom}</h4>
                     <p>Quantité : {item.quantity}</p>
                     <p>{item.prix * item.quantity} $</p>
                   </div>
-                  
-                  {/* ✅ Poubelle pour supprimer l'article */}
                   <button
                     className="delete-btn"
                     onClick={() => handleRemoveItem(index)}
@@ -73,18 +71,23 @@ const Cart = () => {
                   >
                     <FaTrashAlt className="icon-trash" />
                   </button>
-
                 </li>
               ))}
             </ul>
             <p className="cart-total">Total : {total.toFixed(2)} $</p>
             <div className="cart-actions">
               <button onClick={handleClearCart} className="cart-btn danger">Vider le panier</button>
-              <Link to="/checkout">
-                <button className="cart-btn">Passer à la caisse</button>
-              </Link>
+
+              <div className="cart-btn-group">
+                <Link to="/products">
+                  <button className="cart-btn">Continuer mes achats</button>
+                </Link>
+                <Link to="/checkout">
+                  <button className="cart-btn">Passer à la caisse</button>
+                </Link>
+              </div>
             </div>
-          </div>
+          </div>  
         )}
       </div>
     </>

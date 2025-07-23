@@ -8,17 +8,11 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    console.log("📦 Contenu du localStorage user :", JSON.parse(localStorage.getItem('user'))); //DEBOGUE
-
     fetchCommandesClient()
       .then((res) => setOrders(res.data))
       .catch((err) => console.error('Erreur lors du chargement des commandes:', err));
   }, []);
 
-  // ✅ Fonction pour supprimer visuellement une commande
-  const handleDeleteCommande = (deletedId) => {
-    setOrders(prev => prev.filter(order => order._id !== deletedId));
-  };
 
   return (
     <>
@@ -33,7 +27,6 @@ const Orders = () => {
               <OrderItem
                 key={order._id}
                 order={order}
-                onDelete={handleDeleteCommande} // ✅ ICI ajout important
               />
             ))}
           </div>

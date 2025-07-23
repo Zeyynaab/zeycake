@@ -19,14 +19,31 @@ const Footer = () => {
             <ul>
               <li><Link to="/">Accueil</Link></li>
               <li><Link to="/products">Nos gâteaux</Link></li>
-              <li><Link to="/orders">Commandes</Link></li>
-              <li><Link to="/about">À propos</Link></li>
+              <li><Link to="/auth">Connexion / Inscription</Link></li>
+              <li><Link to="/faq">FAQ</Link></li>
             </ul>
           </div>
           <div className="footer-col">
             <h4>Contact</h4>
-            <p>Email : contact@zeycake.com</p>
-            <p>Instagram : @zeycake</p>
+            <p>
+              Email :{' '}
+              <a href="mailto:zeyycake@gmail.com">
+                zeyycake@gmail.com
+              </a>
+              </p>
+
+            <p>
+              Instagram :{' '}
+              <a href="https://www.instagram.com/zeycaake" target="_blank" rel="noopener noreferrer">
+                @zeycaake
+              </a>
+            </p>
+            <p>
+            Tiktok :{' '}
+            <a href="https://www.tiktok.com/@_zeycake_" target="_blank" rel="noopener noreferrer">
+             @_zeycake_
+            </a>
+            </p>
           </div>
         </div>
         <div className="footer-copy">

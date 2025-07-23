@@ -1,4 +1,3 @@
-// ✅ Auth.js (client)
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/global.css';
@@ -39,10 +38,9 @@ const Auth = () => {
         showNotification("Erreur : utilisateur non trouvé", "error");
         return;
       }
+
       localStorage.removeItem('admin'); //NEW
       localStorage.setItem('user', JSON.stringify(user));
-     // localStorage.setItem('token', data.token);
-      
 
       const savedCart = localStorage.getItem(`cart_${user._id}`);
       if (savedCart) {
@@ -106,68 +104,68 @@ const Auth = () => {
           </div>
         )}
 
-        <div className="auth-boxes">
-          <div className="auth-box">
-            <h2>Connexion</h2>
-            <form onSubmit={handleLogin}>
-              <label>Adresse e-mail</label>
-              <input
-                type="email"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-                required
-              />
-              <label>Mot de passe</label>
-              <input
-                type="password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-                required
-              />
-              <div className="forgot-password">Mot de passe oublié ?</div>
-              <button type="submit" className="btn-primary">Se connecter</button>
-            </form>
-          </div>
+        {!localStorage.getItem('user') ? (
+          <div className="auth-boxes">
+            <div className="auth-box">
+              <h2>Connexion</h2>
+              <form onSubmit={handleLogin}>
+                <label>Adresse e-mail</label>
+                <input
+                  type="email"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  required
+                />
+                <label>Mot de passe</label>
+                <input
+                  type="password"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  required
+                />
+                <div className="forgot-password">Mot de passe oublié ?</div>
+                <button type="submit" className="btn-primary">Se connecter</button>
+              </form>
+            </div>
 
-          <div className="auth-box">
-            <h2>Inscription</h2>
-            <form onSubmit={handleRegister}>
-              <label>Nom</label>
-              <input
-                type="text"
-                value={registerNom}
-                onChange={(e) => setRegisterNom(e.target.value)}
-                required
-              />
-              <label>Prénom</label>
-              <input
-                type="text"
-                value={registerPrenom}
-                onChange={(e) => setRegisterPrenom(e.target.value)}
-                required
-              />
-              <label>Adresse e-mail</label>
-              <input
-                type="email"
-                value={registerEmail}
-                onChange={(e) => setRegisterEmail(e.target.value)}
-                required
-              />
-              <label>Mot de passe</label>
-              <input
-                type="password"
-                value={registerPassword}
-                onChange={(e) => setRegisterPassword(e.target.value)}
-                required
-              />
-              <button type="submit" className="btn-primary">S’inscrire</button>
-            </form>
+            <div className="auth-box">
+              <h2>Inscription</h2>
+              <form onSubmit={handleRegister}>
+                <label>Nom</label>
+                <input
+                  type="text"
+                  value={registerNom}
+                  onChange={(e) => setRegisterNom(e.target.value)}
+                  required
+                />
+                <label>Prénom</label>
+                <input
+                  type="text"
+                  value={registerPrenom}
+                  onChange={(e) => setRegisterPrenom(e.target.value)}
+                  required
+                />
+                <label>Adresse e-mail</label>
+                <input
+                  type="email"
+                  value={registerEmail}
+                  onChange={(e) => setRegisterEmail(e.target.value)}
+                  required
+                />
+                <label>Mot de passe</label>
+                <input
+                  type="password"
+                  value={registerPassword}
+                  onChange={(e) => setRegisterPassword(e.target.value)}
+                  required
+                />
+                <button type="submit" className="btn-primary">S’inscrire</button>
+              </form>
+            </div>
           </div>
-        </div>
-
-        {localStorage.getItem('user') && (
+        ) : (
           <div style={{ textAlign: 'center', marginTop: '30px' }}>
-            <button onClick={handleLogout} className="btn-secondary">
+            <button onClick={handleLogout} className="btn-secondary logout">
               Se déconnecter
             </button>
 

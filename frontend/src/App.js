@@ -13,6 +13,10 @@ import Footer from './components/Footer';
 import AdminNavbar from './components/AdminNavbar';
 import AdminRoute from './components/AdminRoute'; //new path admin
 import AdminLogin from './dashboardAdmin/AdminLogin';
+import Faq from './pages/Faq';
+import ScrollToTop from './components/ScrollToTop';
+
+
 //Import pages admin
 /* import ClientsAdmin from './dashboardAdmin/ClientsAdmin';
 import CommandesAdmin from './dashboardAdmin/CommandesAdmin';
@@ -36,6 +40,7 @@ const AppContent = () => {
 
 
       {/* {showHeader && <Header />} */}
+            <ScrollToTop /> 
             <Routes>
               {/*Coté client*/ }
                 <Route path="/" element={<Home/>} />
@@ -45,6 +50,7 @@ const AppContent = () => {
                 <Route path="/products/:id" element={<ProductDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/orders" element={<Orders />} />
+                <Route path="/faq" element={<Faq />} />
 
                 {/**Coté admin */}
                 {/* Dashboard admin */}
