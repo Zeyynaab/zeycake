@@ -1,21 +1,56 @@
-const express = require('express');
-const { validateBody, validateParams, schemas } = require('../middleware/validation');
-const router = express.Router();
+// src/routes/commandes.js
+const express               = require('express');
+const router                = express.Router();
+const commandesController   = require('../controllers/commandesController');
+const authUser              = require('../middleware/authUser');
+const admin                 = require('../middleware/admin');
+const { validateParams, schemas } = require('../middleware/validation');
 
-const verifyToken = require('../middleware/auth');       // ✅ Admin uniquement
-const authUser = require('../middleware/authUser');      // ✅ Admin + Client
+// CREATE – POST /api/commandes
+router.post(
+  '/',
+  authUser,
+  commandesController.createCommande
+);
 
-const commandesController = require('../controllers/commandesController'); // Contrôleur
+// READ ALL – GET /api/commandes
+router.get(
+  '/',
+  authUser,
+  commandesController.getAllCommandes
+);
 
-// ✅ ADMIN uniquement
-router.get('/', verifyToken, commandesController.getAllCommandes);
-router.put('/:id/statut', verifyToken, validateParams(schemas.id), commandesController.updateCommandeStatut);
-router.delete('/:id', authUser, validateParams(schemas.id), commandesController.deleteCommande);
+// READ ONE – GET /api/commandes/:id
+router.get(
+  '/:id',
+  authUser,
+  validateParams(schemas.id),
+  commandesController.getCommandeById
+);
 
-// ✅ CLIENT + ADMIN
-router.get('/mes-commandes', authUser, commandesController.getCommandesUtilisateur); 
-//router.post('/', authUser, validateBody(schemas.commande), commandesController.createCommande);
-router.post('/', authUser, commandesController.createCommande);
-router.get('/:id', authUser, validateParams(schemas.id), commandesController.getCommandeById);
+// UPDATE (adresse) – PUT /api/commandes/:id
+router.put(
+  '/:id',
+  authUser,
+  validateParams(schemas.id),
+  commandesController.updateCommande
+);
+
+// UPDATE (statut) – PUT /api/commandes/:id/statut (admin only)
+router.put(
+  '/:id/statut',
+  authUser,
+  admin,
+  validateParams(schemas.id),
+  commandesController.updateCommandeStatut
+);
+
+// DELETE – DELETE /api/commandes/:id
+router.delete(
+  '/:id',
+  authUser,
+  validateParams(schemas.id),
+  commandesController.deleteCommande
+);
 
 module.exports = router;

@@ -2,14 +2,17 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const user = require('../models/user');
 
 exports.register = async (req, res) => {
   try {
     const { nom, email, password, role } = req.body;
-
+//VERIFIER SI L USER EXISTE DEJA 
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: 'Utilisateur déjà existant.' });
-
+    if (existingUser) {
+      return res.status(400).json({ message: 'Utilisateur déjà existant.' });
+    }
+    //HASHER LE MDP ET CREER L USER
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
@@ -21,31 +24,30 @@ exports.register = async (req, res) => {
     });
 
     await newUser.save();
+    //RETOUR JEST
+    return res.status(201).json({ message : 'Utilisateur créé avec succès',
+      user: newUser
 
-    res.status(201).json({ message: 'Utilisateur créé avec succès', user: newUser });
-  } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }); 
+
+} catch (err) {
+  //console.error(err);
+    return res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
 
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Tentative de connexion :", email, password); //a enelver apres
+    //console.log("Tentative de connexion :", email, password); //a enelver apres
 
 
     const user = await User.findOne({ email });
     if (!user){ 
-      console.log("Utilisateur non trouvé"); //a enelver
       return res.status(401).json({ message: 'Email ou mot de passe invalide.' });
   }
-      console.log("Utilisateur trouvé, mot de passe hashé :", user.password);
-
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Correspondance du mot de passe :", isMatch); //enlever
-
     if (!isMatch) {
-      console.log("Mot de passe incorrect"); //a enelver
       return res.status(401).json({ message: 'Email ou mot de passe invalide.' });
     }
     const token = jwt.sign(
@@ -53,10 +55,9 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
-    console.log("Token généré:", token); //enlever
     //res.status(200).json({ token, user }); 
     //NEW 
-    res.status(200).json({
+    return res.status(200).json({
       _id: user._id,
       email: user.email,
       nom: user.nom,
@@ -65,7 +66,7 @@ exports.login = async (req, res) => {
       token,
     }); //FIN NEW
   } catch (err) {
-    console.error("💥 Erreur serveur dans /login :", err); 
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    //console.error(err); 
+    return res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };

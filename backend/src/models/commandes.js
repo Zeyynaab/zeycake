@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 
 const commandeSchema = new Schema({
   clientId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  produits: [{ type: Object, required: true }], 
+  produits: [{ type: String, required: true }], 
+  quantites :[{type: Number}],
   dateCommande: { type: Date, default: Date.now },
   dateRecuperation: Date,
   statut: { type: String, default: 'en-attente' },

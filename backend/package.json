@@ -4,8 +4,9 @@
   "description": "Application Express MVC avec tests, CI/CD et Docker",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js", 
-    "test": "jest"
+    "start": "node src/server.js", 
+    "test" :"NODE_ENV=test jest --runInBand"
+    
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "jest": "^29.6.2",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "mongodb-memory-server": "^8.11.0"
   }
 }

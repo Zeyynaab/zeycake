@@ -1,28 +1,32 @@
-//Routes pour les admin seulement
-const jwt = require('jsonwebtoken');
+// src/middleware/auth.js
+const jwt  = require('jsonwebtoken');
 const User = require('../models/user');
 
-module.exports = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
+exports.protect = async (req, res, next) => {
+  let token;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Token manquant ou invalide' });
+  // 1. On extrait le token du header Authorization
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer ')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
   }
 
-  const token = authHeader.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'Non authentifié' });
+  }
 
   try {
+    // 2. On vérifie et décode
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user) return res.status(401).json({ message: 'Utilisateur non trouvé' });
-//verifie si user=admin
-    if (user.role !== 'admin') {
-      return res.status(403).json({ message: 'Accès réservé aux administrateurs.' });
+    // 3. On attache l'utilisateur à la requête
+    req.user = await User.findById(decoded.id).select('-password');
+    if (!req.user) {
+      return res.status(401).json({ message: 'Utilisateur introuvable' });
     }
-
-    req.user = user;
     next();
-  } catch (error) {
-    res.status(401).json({ message: 'Token invalide', error: error.message });
+  } catch (err) {
+    return res.status(401).json({ message: 'Token invalide' });
   }
 };

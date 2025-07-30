@@ -1,85 +1,64 @@
 require('dotenv').config();
-const express = require('express');
-const connectMongo = require('../config/mongoose'); // connexion Mongo
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
+const express    = require('express');
+const cors       = require('cors');
+const helmet     = require('helmet');
+const morgan     = require('morgan');
+const rateLimit  = require('express-rate-limit');
+
+// --- Middlewares persos ---
+const authUser     = require('./middleware/authUser');
 const errorHandler = require('./middleware/errorHandler');
-const authMiddleware = require('./middleware/auth');
+const authClient   = require('./middleware/authClient');
 
-// Import des modèles (version mongoose)
-const User = require('./models/user');
-const Product = require('./models/produits');
-const Commande = require('./models/commandes');
-const Ingredient = require('./models/ingredients');
+// --- Routeurs ---
+const authRoutes        = require('./routes/authRoutes');
+const userRoutes        = require('./routes/userRoutes');
+const produitsRoutes    = require('./routes/produits');
+const commandesRoutes   = require('./routes/commandes');
+const ingredientsRoutes = require('./routes/ingredients');
 
-// Création de l'app
 const app = express();
 
-// Autoriser le frontend React
-const allowedOrigins = [
-  'http://localhost:3000', // local
-  'https://heartfelt-cendol-7cd5c1.netlify.app' // production
-];
-
+// --- Sécurité & logs ---
 app.use(cors({
-  origin: function (origin, callback) {
-    // autoriser aussi les requêtes directes sans origin (ex: Postman)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'http://localhost:3000',
+    'https://heartfelt-cendol-7cd5c1.netlify.app'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
-
-const PORT = process.env.PORT || 5050;
-
-// Rate limiter
-const limiter = rateLimit({
+app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   message: 'Trop de requêtes depuis cette IP, réessayez plus tard.'
-});
-
-// Middlewares
+}));
 app.use(helmet());
 app.use(morgan('combined'));
-app.use(limiter);
+
+// --- Parsers ---
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
-const produitsRoutes = require('./routes/produits');
-const commandesRoutes = require('./routes/commandes');
-const ingredientsRoutes = require('./routes/ingredients');
-
-// Routes publiques
+// --- Fichiers statiques ---
 app.use('/uploads', express.static('uploads', {
-  setHeaders: (res, path) => {
+  setHeaders: (res) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://heartfelt-cendol-7cd5c1.netlify.app');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   }
 }));
+
+// --- Routes publiques ---
 app.use('/api/auth', authRoutes);
 app.use('/api/produits', produitsRoutes);
 
-// ✅ Nouvelle route protégée pour gérer les utilisateurs (clients/admin)
-app.use('/api/users', authMiddleware, userRoutes);
-
-// Routes protégées
-//app.use('/api/commandes', authMiddleware, commandesRoutes);
-const authUser = require('./middleware/authUser');
+// --- Routes protégées (clients & admins) ---
+app.use('/api/users', authUser, userRoutes);
 app.use('/api/commandes', authUser, commandesRoutes);
-app.use('/api/ingredients', authMiddleware, ingredientsRoutes);
+app.use('/api/ingredients', authUser, ingredientsRoutes);
 
-// Route d'accueil
+// --- Root endpoint ---
 app.get('/', (req, res) => {
   res.json({
     message: 'API ZeyCake - Bienvenue!',
@@ -94,49 +73,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Route test client authentifié
-const authClient = require('./middleware/authClient');
-app.get('/api/mes-commandes', authClient, (req, res) => {
-  res.json({ message: `Bienvenue client ${req.user.email}, voici vos commandes.` });
-});
-
-// 🟢 Démarrage avec Mongo
-const bcrypt = require('bcryptjs');
-
-const start = async () => {
-  try {
-    await connectMongo(); // Connexion MongoDB
-
-    // Créer admin si inexistant
-    const admin = await User.findOne({ email: 'zeycake@patisserie.com' });
-    if (!admin) {
-      const hash = await bcrypt.hash('123456', 10);
-      await User.create({
-        nom: 'Admin',
-        prenom: 'Super',
-        email: 'zeycake@patisserie.com',
-        password: hash,
-        role: 'admin'
-      });
-    } else { //NEW
-  // 🛠 Assure qu'il est admin même s'il existe déjà
-      if (admin.role !== 'admin') {
-        admin.role = 'admin';
-        await admin.save();
-        console.log('✅ Rôle admin mis à jour pour l’utilisateur existant');
-      }
-    }
-
-    // ✅ Démarrer le serveur
-    app.listen(PORT, () => {
-      console.log(`Serveur démarré sur ${PORT}`);
-    });
-
-  } catch (error) {
-    console.error('Erreur lors du démarrage :', error);
-  }
-};
-
-start();
+// --- Gestion des erreurs (dernier middleware) ---
+app.use(errorHandler);
 
 module.exports = app;
