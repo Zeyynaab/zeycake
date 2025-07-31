@@ -1377,3 +1377,43 @@ ul {
     transform: translateY(0);
   }
 }
+
+/* /* 📱 Responsive pour les bannières 
+@media (max-width: 768px) {
+  .page-banner {
+    height: 280px;
+    background-attachment: scroll;
+  }
+
+  .banner-title {
+    font-size: 28px;
+  }
+
+  .banner-subtitle {
+    font-size: 18px;
+  }
+
+  .home-banner-image {
+    height: 280px;
+    background-attachment: scroll;
+  }
+
+  .home-banner-content h1 {
+    font-size: 24px;
+    line-height: 1.2;
+    padding: 0 16px;
+  }
+
+  .home-btn {
+    font-size: 14px;
+    padding: 10px 20px;
+    width: auto;
+    max-width: 90%;
+  }
+
+  .home-banner-content {
+    text-align: center;
+    padding: 0 16px;
+  }
+}
+ */

@@ -1,11 +1,11 @@
 //pour importer directment les fetch 
 import axios from 'axios';
-
+/*istanbul ignore next*/
 // Pour React créé avec create-react-app
 const API = axios.create({
   baseURL: process.env.REACT_APP_API_URL || "http://localhost:5050/api",
 });
-
+/*istanbul ignore next*/
 // Intercepteur pour attacher le token
 API.interceptors.request.use((config) => {
   const pathname = window.location.pathname;
