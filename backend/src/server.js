@@ -1,10 +1,6 @@
 // src/server.js
 require('dotenv').config();   
-         // Charge .env en local ou variables d’env prod
-console.log('❓ process.env.MONGO_URI =', process.env.MONGO_URI);
-console.log('❓ process.env.MONGODB_URI =', process.env.MONGODB_URI);
-console.log('❓ process.env.DATABASE_URL =', process.env.DATABASE_URL);
-
+// Charge .env en local ou variables d’env prod
 const mongoose = require('mongoose');
 const app = require('./app');
 
@@ -21,14 +17,12 @@ if (!uri) {
   process.exit(1);
 }
 
-// Utile pour debug : on voit bien ce qu’on utilise
+// DEBUG
 console.log('URI Mongo utilisée :', uri);
-
+/* istanbul ignore next */
+//Bloc de connexion a mongoDB
 mongoose
-  .connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(uri)
   .then(() => {
     console.log('✓ MongoDB connecté');
     const port = process.env.PORT || 3000;
