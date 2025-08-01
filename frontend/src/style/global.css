@@ -1,0 +1,1419 @@
+/* Header */
+/* Banniere menu pour les pages*/
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white; /*avant #ffe9e3;*/
+  padding: 0px 30px; /*avant 20px 40px;*/
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid white; /*avant e5b3a4*/
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+/*navbar pages*/
+.nav-links a {
+  text-decoration: none;
+  color: #3d1f13;
+  font-size: 16px;
+  transition: color 0.2s ease;
+  font-family: "Avenir Next", sans-serif;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+  color: #d76d5b;
+  font-weight: bold;
+}
+
+/*logo zeycake navbar pages*/
+.logo-img {
+  height: 80px; /* ajuste selon la taille souhaitée */
+  object-fit: contain;
+}
+
+
+/* Bouton du header pour les pages */
+/* 🟥 En desktop : on cache le bouton hamburger */
+/* .menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/*🟢 En responsive (mobile ou petit écran) 
+@media (max-width: 768px) {
+  .main-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem; /* ✅ Placé complètement à droite 
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    border-radius: 0 0 0 12px;
+    box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px 20px;
+    z-index: 999;
+    min-width: 200px;
+    align-items: flex-start;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 12px 0;
+    text-align: left;
+    width: 100%;
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+  }
+} */
+
+
+
+
+/*PAGE BANNER*/
+ .page-banner {
+  position: relative;
+  height: 460px;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /*glisser la banniere*/
+  display: flex;
+  justify-content: center; /* centrer horizontalement */
+  align-items: center;     /* centrer verticalement */
+  text-align: center;
+  animation: slideDown 1s ease-out;
+
+}
+
+
+.banner-overlay {
+  position: absolute;
+  width: 100%; /* couvre toute la largeur */
+  height: 100%; /* couvre toute la hauteur */
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(3px); /*gestion du flou*/
+  background-color: rgba(0, 0, 0, 0.15);
+  
+  
+}
+
+.banner-content {
+  position: relative;
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.banner-title {
+  font-size: 48px;
+  font-style: italic;
+  font-weight: bold; /*avant 500*/
+  margin-bottom: 20px;
+  color: #5a2c1a;
+}
+
+.banner-subtitle {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Animation simple */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Home */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: white; /*avant fff8f4*/
+  color: #3d1f13;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* NAVBAR banniere home*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white; /*avant #ffe9e3;*/
+  padding: 0px 30px; /*avant 20px 40px;*/
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid white; /*avant ffe9e3*/
+}
+
+/*AFFICHER LE NOM DU CLIENT SUR LES PAGES NAVBAR(Home) ET HEADER(other page) */
+.logo-and-user {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-greeting {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #5c2a07;
+  font-size: 20px;
+}
+
+/*BOUTON HAMBURGER POUR LA PAGE HOME*/
+/* Pour la navbar responsive */
+/* bouton hamburger */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  list-style: none;
+}
+
+/* dropdown desktop */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  padding: 10px;
+  flex-direction: column;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  min-width: 160px;
+  margin-top: -4px;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+  
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .nav-links {
+    display: none!important;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    border-radius: 0 0 0 12px;
+    box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px 20px;
+    z-index: 999;
+    min-width: 220px;
+    align-items: flex-start;
+  }
+
+  .nav-links.open {
+    display: flex!important;
+  }
+
+  /* cacher les dropdown en mobile */
+  .dropdown {
+    display: none !important;
+  }
+}
+
+
+
+/* ================= NAVIGATION SUPPLÉMENTAIRE ================= */
+
+/* Icône panier */
+.nav-icon {
+  font-size: 20px;
+  cursor : pointer;
+}
+
+/* Dropdown Mon compte */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  text-decoration: none;
+  color: #3d1f13;
+  font-size: 16px;
+  font-family: "Avenir Next", sans-serif;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 160px;
+  padding: 10px;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 8px 12px;
+  color: #3d1f13;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f3f3f3;
+}
+
+
+/*logo zeycake navbar home*/
+.logo-img-home {
+  height: 80px;
+  object-fit: contain;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  font-size: 18px;
+  color: #3d1f13;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #d76d5b;
+}
+
+/* HERO SECTION  HOME */
+.home-banner-image {
+  background-size: cover;
+  background-position: center;
+  height: 600px; /*avant 80vh*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-attachment: fixed; /*glisser la banniere*/
+}
+
+.home-banner-image::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.home-banner-content {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+  color: #5a2c1a;
+}
+
+.home-banner-content h1 {
+  font-size: 48px;
+  font-style: italic;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.home-btn {
+  margin-top: 20px;
+  padding: 12px 28px;
+  background-color: #5a2c1a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.home-btn:hover {
+  background-color: #7d3a23;
+}
+
+
+
+
+/*A PROPOS SECTION */
+.about-line {
+  background-color: white; /*avant fff8f4, fffafa*/
+  padding: 5rem 2rem;
+}
+
+.about-line-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.about-col {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.about-text-box {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  height: 100%;
+}
+
+.about-text-box h2 {
+  font-size: 2rem;
+  color: #7a3e2d;
+  margin-bottom: 1rem;
+}
+
+.about-text-box span {
+  color: #7a3e2d;
+}
+
+.about-text-box p {
+  color: #3d1f13;
+  line-height: 1.7;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.founder-signature {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.2rem;
+  color: #a35b41;
+}
+
+/* ✅ Responsive : stack en colonne */
+@media (max-width: 1000px) {
+  .about-line-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-col {
+    max-width: 100%;
+  }
+
+  .about-text-box {
+    margin: 2rem 0;
+  }
+}
+
+
+/* @media (max-width: 768px) {
+  .about-image img {
+    height: auto;
+    width: 100%;
+    max-width: 350px;
+  }
+} */
+
+
+/* FEATURED PRODUCTS */
+
+.featured-products {
+  padding: 80px 40px 30px;
+  background-color: white; /*avant fff1e8 */
+  text-align: center;
+}
+
+.featured-products h2 {
+  font-size: 2rem;
+  color: #5c2c0d;
+  margin-bottom: 40px;
+  font-family: 'Georgia', serif;
+}
+
+.product-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.product-card {
+  background-color: transparent;
+  width: 220px;
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.product-card p {
+  margin-top: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #5c2c0d;
+  font-family: 'Georgia', serif;
+  line-height: 1.4;
+}
+
+/* POURQUOI NOUS CHOISIR */
+/* WHY CHOOSE */
+.why-choose {
+  background-color: #fcded7;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.why-choose h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.why-choose span {
+  font-style: italic;
+}
+
+.why-icons {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  font-size: 18px;
+}
+/* TESTIMONIALS */
+.testimonials {
+  background-color: #fff1e8;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.testimonials h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.testimonial-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.testimonial {
+  background-color: #ffe9e3;
+  padding: 20px;
+  border-radius: 12px;
+  width: 250px;
+}
+
+
+
+/* Produits */
+
+/* ============================= */
+/* 📦 Grille Produits (style ÔFauria amélioré) */
+/* ============================= */
+
+.products-wrapper {
+  display: grid;
+  grid-template-columns: 280px 1fr; /*avant 240px 1fr*/
+  gap: 100px; /*avant 30*/
+  max-width: 1200px;
+  margin: 40px auto 0 auto; /* espacement avec la bannière */
+  padding: 0 24px; /*avant 20 px*/
+  
+  
+}
+
+.produits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 blocs fixes sur desktop */
+  gap: 32px;
+  justify-content: center;
+  width: 100%;
+}
+
+.produit-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.produit-image {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* garantit que c’est un carré */
+  object-fit: cover;
+  border-radius: 0 !important;
+}
+
+.product-name {
+  font-size: 14px;
+  font-weight: normal;
+  text-align: left;
+  font-family: "Avenir Next", sans-serif;
+  margin: 8px 0 4px 0;
+  color: black;
+}
+
+.product-price {
+  font-size: 14px;
+  color: black;
+  text-align: left;
+  font-family: "Avenir Next", sans-serif;
+}
+
+
+/* ============================= */
+/* 🧊 Sidebar filtres à gauche */
+/* ============================= */
+
+.filter-sidebar {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+  font-family: "Avenir Next", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /*taille du bloc filtre*/
+  width: 300px;
+  margin-left: -5px;
+  padding-left: 30px;
+  min-width: 240px;
+ 
+}
+
+.filter-sidebar h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #444;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 6px;
+}
+
+.filter-sidebar label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.filter-sidebar select,
+.filter-sidebar input {
+  padding: 6px 10px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: "Avenir Next", sans-serif;
+}
+
+
+/* ============================= */
+/* 📱 Responsive (tablette/mobile) */
+/* ============================= */
+
+/* .filter-toggle-mobile {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.filter-toggle-mobile button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+} */
+
+.filter-toggle-mobile {
+  display: none;
+  margin: 0 auto;
+  width: 100%;
+  background-color: #333;
+  padding: 14px 0;
+  text-align: center;
+}
+
+.filter-toggle-mobile button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Avenir Next", sans-serif;
+  width: 100%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .products-wrapper {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+    padding-bottom: 70px;
+  }
+
+  .filter-sidebar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  padding: 30px 20px 90px;
+  overflow-y: auto;
+  z-index: 999;
+  transform: translateY(100%);
+  transition: transform 0.35s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  transform: translateY(100%);
+  transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+.filter-sidebar.visible {
+  transform: translateY(0%);
+}
+
+
+  .filter-sidebar h3 {
+    display: block;
+  font-size: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 8px;
+  text-align: center;
+  }
+
+  .filter-toggle-mobile {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100; /*avant 1100*/
+  background: #222;
+  padding: 16px 0;
+  text-align: center;
+  }
+
+  .filter-toggle-mobile button {
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  }
+
+  .filter-sidebar > div {
+    margin-bottom: 16px;
+  }
+
+  .produits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+
+
+}
+
+
+/* ProductsDetail */
+.product-detail {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+
+.detail-image {
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+.detail-info {
+  max-width: 600px;
+  text-align: left;
+  font-family: "Avenir Next", sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #3d1f13;
+  padding: 0 10px;
+}
+
+.detail-info h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #3d1f13;
+}
+
+.detail-description {
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
+}
+
+.detail-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #dd3b3b;
+}
+
+.detail-qty {
+  width: 60px;
+  margin-left: 0.5rem;
+}
+
+.detail-btn {
+  display: block;
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background-color: #ff7f50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .product-detail {
+    flex-direction: column;
+    padding: 1rem;
+    /* align-items: center; */
+    /* padding: 10px; */
+  }
+  .detail-info {
+    text-align: left;
+    padding: 0 1rem;
+  }
+
+  .detail-image {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/*Cart */
+.cart {
+  padding: 2rem;
+  text-align: center;
+}
+
+.empty-cart p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.cart-btn {
+  padding: 0.7rem 1.2rem;
+  background-color: #c26442; /*avant ff7f50*/
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.cart-btn.danger {
+  background-color: #888;
+}
+
+.cart-content {
+  text-align: left;
+  margin-top: 2rem;
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.cart-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.cart-total {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.cart-actions {
+  margin-top: 1rem;
+}
+
+.cart-btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+ color: #efb9a7;
+} 
+
+
+/*NEW bouton delete*/
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #d63031;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-trash {
+  font-size: 15px;
+  color: #666;
+  transition: transform 0.2s ease;
+}
+
+.icon-trash:hover {
+  color: #d63031;
+  transform: scale(1.2);
+}
+
+
+/*Checkout */
+.checkout {
+  padding: 2rem;
+  text-align: center;
+}
+
+.checkout-form {
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkout-form input {
+  padding: 0.7rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.checkout-btn {
+  padding: 0.7rem;
+  background-color: #3c9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.checkout-total {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+
+/*Orders */
+
+.orders {
+  padding: 2rem;
+  text-align: center;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.order-item {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: left;
+  background: #f9f9f9;
+  
+}
+
+
+
+/*PAGE AUTH*/
+
+.auth-container {
+  padding: 40px 20px;
+  background-color: white; /*avant #fff4ee */
+  min-height: 100vh;
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #3d1f13;
+}
+
+.auth-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.auth-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 300px;
+}
+
+.auth-box h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #3d1f13;
+}
+
+.auth-box form label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #3d1f13;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fefefe;
+}
+/*Bouton se connecter et s'inscrire */
+.btn-primary {
+  background-color: #efb9a7;
+  color: #3d1f13;
+  border: none;
+  padding: 12px;
+  margin-top: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #eaa993;
+}
+/*Bouton se deconnecter et passer en mode admin*/
+.btn-secondary {
+  background-color: #efb9a7;
+  color: #3d1f13;
+  border: none;
+  padding: 12px;
+  margin-top: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  margin: 20px auto;   
+  width: fit-content;  
+  
+}
+
+.btn-secondary:hover {
+  background-color: #eaa993;
+} 
+
+.logout {
+  margin-bottom: -5px !important;
+}
+
+.btn-secondary {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  transform: scale(1.03);
+  /* background-color: rgba(0, 0, 0, 0.04); */
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 12px;
+  color: #6c4c3b;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .auth-boxes {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+/*FOOTER*/
+.footer {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  padding: 0; /*avant 60px 0 30px;*/
+  color: white;
+  overflow: hidden;
+}
+
+.footer-overlay {
+  background-color: rgba(0, 0, 0, 0.85); /* + sombre */
+  width: 100%;
+  height: 100%;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 220px;
+
+}
+
+.footer-col h4 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #fcd7c3;
+}
+
+.footer-col p,
+.footer-col ul li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-col ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy {
+  margin-top: 30px;
+  font-size: 14px;
+  text-align: center;
+  color: #ccc;
+}
+
+/* ✅ Notification message (succès / erreur)  Page Auth*/
+.notification {
+  margin: 10px auto 20px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  max-width: 480px;
+  text-align: center;
+  font-weight: 500;
+  opacity: 0.95;
+  font-size: 15px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  /*background-color: #fefefe;  fond très clair */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.notification.success {
+  color: #2e7d32; /* vert doux */
+  /*border-color: #dbe6db; contour léger*/
+}
+
+.notification.error {
+  color: #c62828; /* rouge doux */
+  border-color: #f5c6cb; /* contour léger */
+}
+
+/*NOTIF MESSAGE PAGE PRODUCTDETAILS*/
+.popup-notif {
+  margin: 0 auto 20px;
+  padding: 10px 16px;
+  max-width: 420px;
+  text-align: center;
+  /*background-color: rgba(255, 92, 92, 0.1); rouge pâle */
+  border-radius: 6px;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in-out;
+  transition: opacity 0.4s ease;
+  font-size: 15px;
+}
+
+.popup-notif.success {
+  /*background-color: rgba(40, 167, 69, 0.1);  vert pâle */
+  color: rgb(181, 237, 181);
+  border-color: #b9e6c2;
+}
+
+/* ❌ Message d’erreur (rouge) */
+.popup-notif.error {
+  /*background-color: rgba(255, 92, 92, 0.1);*/
+  color: rgb(244, 128, 128);
+  border-color: #ffc5c5;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*PAGE FAQ*/
+.faq-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.faq-title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 32px;
+  color: #5c2a07;
+}
+
+.faq-item {
+  border-bottom: 1px solid #e2d1c3;
+  padding: 15px 0;
+  cursor: pointer;
+}
+
+.faq-question {
+  font-family: "Georgia", serif;
+  font-size: 18px;
+  color: #b46b5c;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.faq-question:hover {
+  color: #a14c3a;
+}
+
+.faq-arrow {
+  font-size: 16px;
+}
+
+.faq-answer {
+  padding-top: 10px;
+  font-size: 16px;
+  color: #3d1f13;
+  line-height: 1.6;
+  animation: slideDown 0.3s ease;
+  font-family: "Avenir Next", sans-serif;
+}
+
+/* Animation douce */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* /* 📱 Responsive pour les bannières 
+@media (max-width: 768px) {
+  .page-banner {
+    height: 280px;
+    background-attachment: scroll;
+  }
+
+  .banner-title {
+    font-size: 28px;
+  }
+
+  .banner-subtitle {
+    font-size: 18px;
+  }
+
+  .home-banner-image {
+    height: 280px;
+    background-attachment: scroll;
+  }
+
+  .home-banner-content h1 {
+    font-size: 24px;
+    line-height: 1.2;
+    padding: 0 16px;
+  }
+
+  .home-btn {
+    font-size: 14px;
+    padding: 10px 20px;
+    width: auto;
+    max-width: 90%;
+  }
+
+  .home-banner-content {
+    text-align: center;
+    padding: 0 16px;
+  }
+}
+ */

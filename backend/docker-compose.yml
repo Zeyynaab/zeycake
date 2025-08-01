@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: zeycake-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: .
+    container_name: zeycake-backend
+    ports:
+      - "5050:5050"
+    depends_on:
+      - mongo
+    environment:
+      - NODE_ENV=development
+      - PORT=5050
+      - JWT_SECRET=Clesecretezeycake
+      - JWT_EXPIRES_IN=1d
+      - MONGO_URI=mongodb://mongo:27017/zeycake
+    volumes:
+      # Montage du code local pour dev (facile à modifier)
+      - .:/usr/src/app
+      # Empêche l'écrasement de node_modules du conteneur par ceux de l'hôte (s’il y en a)
+      - /usr/src/app/node_modules
+    command: npm start
+    working_dir: /usr/src/app
+
+volumes:
+  mongo_data:
