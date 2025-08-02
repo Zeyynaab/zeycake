@@ -1,11 +1,8 @@
 FROM node:18
-#pour mon mac M3 , lautre etait intel 
-#FROM --platform=linux/arm64 node:18 
-
 
 WORKDIR /usr/src/app
 
-# Copie des manifests d'abord (caching des installs)
+# Copie des manifests d'abord 
 COPY package*.json ./
 
 RUN npm install 
@@ -16,7 +13,7 @@ RUN npm install
 # Copie du code
 COPY . .
 
-# Port interne (doit matcher le PORT utilisé par app.js)
+# Port interne 
 ENV PORT=5050
 
 EXPOSE 5050

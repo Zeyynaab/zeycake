@@ -23,9 +23,9 @@ services:
       - JWT_EXPIRES_IN=1d
       - MONGO_URI=mongodb://mongo:27017/zeycake
     volumes:
-      # Montage du code local pour dev (facile à modifier)
+      # Montage du code local pour dev
       - .:/usr/src/app
-      # Empêche l'écrasement de node_modules du conteneur par ceux de l'hôte (s’il y en a)
+      # Empêche l'écrasement de node_modules du conteneur 
       - /usr/src/app/node_modules
     command: npm start
     working_dir: /usr/src/app

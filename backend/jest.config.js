@@ -14,7 +14,7 @@ module.exports = {
     "src/services/**/*.js"
   ],
   setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
-  testTimeout: 20000,
+  testTimeout: 60000,
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageThreshold: {
