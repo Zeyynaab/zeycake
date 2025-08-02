@@ -24,6 +24,12 @@ jobs:
               sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
             }
           fi
+      - name: Vérifier libcrypto
+        run: |
+          ldconfig -p | head -n 80
+          ls -l /usr/lib/x86_64-linux-gnu/libcrypto*
+          strings /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 | head -n 20 || echo "libcrypto non trouvée"
+
 
       - name: Installation de Node.js
         uses: actions/setup-node@v4
@@ -37,6 +43,8 @@ jobs:
       - name: Lancement des tests avec couverture
         run: npm run test:ci
         working-directory: backend
+        env:
+          DEBUG: mongodb-memory-server*
 
       - name: Sauvegarde de la couverture
         if: success()
