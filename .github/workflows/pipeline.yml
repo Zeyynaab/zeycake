@@ -9,29 +9,28 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-20.04
-    env: 
-       DEBUG: "mongodb-memory-server*"
     steps:
       - name: Récupération du dépôt
         uses: actions/checkout@v4
 
-        name: Installer libssl1.1 
+      - name: Installer libssl1.1 (pour libcrypto.so.1.1)
         run: |
           sudo apt-get update
-          sudo apt-get install -y libssl1.1 || true
-          # fallback : télécharger et installer manuellement la version compatible
-          if ! ldconfig -p | grep libcrypto.so.1.1 >/dev/null 2>&1; then
-            wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl1.1/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
-            sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb || sudo apt-get -f install -y
+          if ! dpkg -s libssl1.1 >/dev/null 2>&1; then
+            # tentative d'installation depuis les dépôts
+            sudo apt-get install -y libssl1.1 || {
+              # fallback : téléchargement manuel d'un paquet compatible
+              wget https://archive.ubuntu.com/ubuntu/pool/main/o/openssl1.1/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+              sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+            }
           fi
-          ldconfig
 
       - name: Installation de Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
 
-      - name: Installation des dépendances
+      - name: Installation des dépendances backend
         run: npm ci
         working-directory: backend
 
