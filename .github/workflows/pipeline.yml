@@ -1,0 +1,34 @@
+name: Exécution automatique backend
+
+on:
+  push:
+    branches: [ new-branch ]
+  pull_request:
+    branches: [ new-branch ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: Installation de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Installation des dépendances
+        run: npm ci
+        working-directory: backend
+
+      - name: Lancement des tests avec couverture
+        run: npm run test:ci
+        working-directory: backend
+
+      - name: Sauvegarde de la couverture
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rapport-couverture
+          path: backend/coverage
