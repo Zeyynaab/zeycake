@@ -1,11 +1,16 @@
-// models/Commande.js
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+const ProduitDansCommandeSchema = new Schema({
+  nom: { type: String, required: true },
+  qte: { type: Number, required: true },
+  prix: { type: Number, required: true },
+  produit: { type: Schema.Types.ObjectId, ref: 'Produit' } // optionnel si tu veux linker
+}, { _id: false });
+
 const commandeSchema = new Schema({
   clientId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  produits: [{ type: String, required: true }], 
-  quantites :[{type: Number}],
+  produits: { type: [ProduitDansCommandeSchema], required: true },
   dateCommande: { type: Date, default: Date.now },
   dateRecuperation: Date,
   statut: { type: String, default: 'en-attente' },

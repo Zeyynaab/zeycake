@@ -4,16 +4,37 @@ const Commande = require('../models/commandes');
 
 exports.createCommande = async (req, res, next) => {
   try {
+    const { produits, adresse, commentaires, dateRecuperation } = req.body;
+
+    if (!Array.isArray(produits) || produits.length === 0) {
+      return res.status(400).json({ message: 'Au moins un produit est requis.' });
+    }
+
+    // Validation rapide des produits
+    for (const p of produits) {
+      if (typeof p.nom !== 'string' || typeof p.qte !== 'number' || typeof p.prix !== 'number') {
+        return res.status(400).json({ message: 'Format de produit invalide.' });
+      }
+    }
+
+    const total = produits.reduce((sum, p) => sum + p.prix * p.qte, 0);
+
     const data = {
-      ...req.body,
-     clientId: req.user.id,     // ← indispensable si ton schema exige clientId
-   };
-   const newCommande = await Commande.create(data);
-     res.status(201).json(newCommande);
-   } catch (err) {
-     next(err);
-   }
- };
+      clientId: req.user.id,
+      produits,
+      total,
+      adresse,
+      commentaires,
+      dateRecuperation,
+    };
+
+    const newCommande = await Commande.create(data);
+    res.status(201).json(newCommande);
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 exports.getAllCommandes = async (req, res, next) => {
   try {
