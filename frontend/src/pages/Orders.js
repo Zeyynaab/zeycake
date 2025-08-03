@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import OrderItem from '../components/OrderItem';
 import '../style/global.css';
 import PageBanner from '../components/PageBanner';
@@ -19,7 +19,7 @@ function isTokenValid() {
 }
 
 const Orders = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
