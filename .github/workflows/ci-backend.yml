@@ -42,6 +42,13 @@ jobs:
       - name: Lancer les tests avec couverture
         run: npm run test:ci
         working-directory: backend
+        env:
+          DEBUG: mongodb-memory-server*
+
+      - name: Afficher le contenu de coverage pour debug
+        run: |
+          echo "=== Contenu de backend/coverage ==="
+          ls -R backend/coverage || echo "Pas de dossier coverage trouvé"
 
       - name: Upload couverture
         if: success()
