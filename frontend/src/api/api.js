@@ -21,7 +21,8 @@ API.interceptors.request.use((config) => {
   const admin = JSON.parse(localStorage.getItem('admin'));
   const user = JSON.parse(localStorage.getItem('user'));
 
-  const token = isAdmin ? admin?.token : user?.token;
+// fallback : si on est en admin mais que `admin` est vide, on prend `user`
+  const token = isAdmin ? (admin?.token || user?.token) : user?.token;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

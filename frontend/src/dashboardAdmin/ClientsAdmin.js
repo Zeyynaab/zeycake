@@ -13,6 +13,7 @@ function ClientsAdmin() {
     password: '',
   });
   const [selectedId, setSelectedId] = useState(null);
+  const [message, setMessage] = useState(null); // <-- ajout
 
   useEffect(() => {
     fetchClients();
@@ -41,23 +42,29 @@ function ClientsAdmin() {
       telephone: client.telephone || '',
       password: '',
     });
+    setMessage(null);
   };
 
   const handleDelete = async (id) => {
     if (window.confirm('Supprimer ce client ?')) {
       try {
         await API.delete(`/users/${id}`);
+        setMessage('Client supprimé');
         fetchClients();
       } catch (err) {
         console.error(err);
+        setMessage('Erreur lors de la suppression');
       }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const dataToSend = { ...formData, role: 'client' };
+    setMessage(null);
+    const { nom, prenom, email, telephone, password } = formData;
+    const dataToSend = isEditing
+      ? { nom, prenom, email, telephone }
+      : { nom, prenom, email, telephone, password };
 
     const url = isEditing ? `/users/${selectedId}` : '/users';
     const method = isEditing ? 'put' : 'post';
@@ -73,9 +80,14 @@ function ClientsAdmin() {
       });
       setIsEditing(false);
       setSelectedId(null);
+      setMessage(isEditing ? 'Client mis à jour' : 'Client ajouté');
       fetchClients();
     } catch (err) {
       console.error("Erreur lors de l'envoi :", err);
+      setMessage(
+        'Erreur : ' +
+          (err.response?.data?.message || err.message || 'Échec de la requête')
+      );
     }
   };
 
@@ -89,8 +101,13 @@ function ClientsAdmin() {
         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
         <input type="text" name="telephone" placeholder="Téléphone" value={formData.telephone} onChange={handleChange} />
         <input type="password" name="password" placeholder="Mot de passe" value={formData.password} onChange={handleChange} required={!isEditing} />
-        <button type="submit" className="btn-submit">{isEditing ? 'Mettre à jour' : 'Ajouter'}</button>
+        <button type="submit" className="btn-submit">
+          {isEditing ? 'Mettre à jour' : 'Ajouter'}
+        </button>
       </form>
+
+      {/* <-- affichage du message ici */}
+      {message && <div className="notification">{message}</div>}
 
       <table className="admin-table">
         <thead>

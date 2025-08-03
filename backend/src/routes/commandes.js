@@ -20,6 +20,13 @@ router.get(
   commandesController.getAllCommandes
 );
 
+// Commandes du client connecté
+router.get(
+  '/mes-commandes',
+  authUser,
+  commandesController.getMesCommandes
+);
+
 // READ ONE – GET /api/commandes/:id
 router.get(
   '/:id',

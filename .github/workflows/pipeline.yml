@@ -1,46 +1,65 @@
-name: Exécution automatique backend
+name: Backend CI
 
 on:
   push:
     branches: [ new-branch ]
   pull_request:
     branches: [ new-branch ]
+  workflow_dispatch:
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04  # nécessaire pour libssl1.1
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="mongosh --eval 'db.adminCommand({ ping: 1 })'" 
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      JWT_SECRET: superSecret
+      JWT_EXPIRES_IN: 7d
+      MONGO_URI: mongodb://localhost:27017/zeycake-test
+
     steps:
-      - name: Récupération du dépôt
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Installer libssl1.1 
-        run: |
-          sudo apt-get update
-          if ! dpkg -s libssl1.1 >/dev/null 2>&1; then
-            sudo apt-get install -y libssl1.1 || {
-              wget https://archive.ubuntu.com/ubuntu/pool/main/o/openssl1.1/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
-              sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
-            }
-          fi
-
-      - name: Installation de Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
+          cache: "npm"
 
-      - name: Installation des dépendances backend
+      - name: Installer libssl1.1 si nécessaire
+        run: |
+          if ! dpkg -s libssl1.1 >/dev/null 2>&1; then
+            sudo apt-get update
+            if ! sudo apt-get install -y libssl1.1; then
+              wget https://archive.ubuntu.com/ubuntu/pool/main/o/openssl1.1/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+              sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+            fi
+          fi
+
+      - name: Installer les dépendances du backend
         run: npm ci
         working-directory: backend
 
-      - name: Lancement des tests avec couverture
+      - name: Lancer les tests avec couverture
         run: npm run test:ci
         working-directory: backend
         env:
-          DEBUG: mongodb-memory-server*  
+          DEBUG: mongodb-memory-server*
 
-      - name: Sauvegarde de la couverture
+      - name: Upload couverture
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: rapport-couverture
+          name: couverture-backend
           path: backend/coverage

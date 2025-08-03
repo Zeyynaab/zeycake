@@ -51,7 +51,7 @@ const Navbar = () => {
         <Link to="/" className="logo">
           <img src="/images/Logo1.png" alt="ZeyCake logo" className="logo-img-home" />
         </Link>
-        {user && <div className="user-greeting">Salut, {user.prenom || user.email} !</div>}
+        {user && <div className="user-greeting">Salut, {user.nom || user.email} !</div>}
 
         {/* BOUTON BURGER */}
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>☰</button>

@@ -61,6 +61,17 @@ exports.getCommandeById = async (req, res, next) => {
   }
 };
 
+// Commandes du client connecté
+exports.getMesCommandes = async (req, res, next) => {
+  try {
+    const userId = req.user.id; // ou req.user._id, les deux fonctionnent avec Mongoose
+    const commandes = await Commande.find({ clientId: userId });
+    res.status(200).json(commandes);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.updateCommande = async (req, res, next) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {

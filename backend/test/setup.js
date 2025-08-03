@@ -6,7 +6,7 @@ jest.setTimeout(30000);
 
 // fournir des valeurs par défaut pour les tests
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'testsecret';
-process.env.JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1d';
+process.env.JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 process.env.PORT = process.env.PORT || '5050'; // si utilisé quelque part
 
 let mongoServer;

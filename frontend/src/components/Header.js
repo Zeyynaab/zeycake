@@ -14,7 +14,7 @@ const Header = () => {
       <div className="logo-and-user">
         <img src="/images/Logo1.png" alt="ZeyCake logo" className="logo-img" />
         {user && (
-          <div className="user-greeting">Salut, {user.prenom ||user.email} !</div>
+          <div className="user-greeting">Salut, {user.nom ||user.email} !</div>
         )}
 
         {/* Hamburger bouton visible en mobile */}

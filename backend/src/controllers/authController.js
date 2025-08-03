@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
       prenom: req.body.prenom,
       email: req.body.email,
       password: hashedPassword,
-      role: role || 'client',
+      role: 'client',
     });
 
     await newUser.save();
@@ -38,15 +38,20 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    console.log('Tentative de login reçue, body =', req.body);
     const { email, password } = req.body;
     //console.log("Tentative de connexion :", email, password); //a enelver apres
 
 
     const user = await User.findOne({ email });
+    console.log('Utilisateur trouvé:', user ? user.email : null); //ENLEVER
+    
     if (!user){ 
       return res.status(401).json({ message: 'Email ou mot de passe invalide.' });
   }
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log('Résultat comparaison password:', isMatch); //ENLEVER
+    
     if (!isMatch) {
       return res.status(401).json({ message: 'Email ou mot de passe invalide.' });
     }

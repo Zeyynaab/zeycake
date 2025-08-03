@@ -22,6 +22,7 @@ const Auth = () => {
 
   const handleLogin = async (e) => {
   e.preventDefault();
+  console.log('→ handleLogin déclenché avec', { loginEmail, loginPassword });
   try {
     const res = await login({ email: loginEmail, password: loginPassword });
     console.log('🔑 login response data =', res.data);
@@ -41,6 +42,7 @@ const Auth = () => {
     // Stockage
     localStorage.removeItem('admin');
     localStorage.setItem('user', JSON.stringify(user));
+    console.log(localStorage.getItem('user')) //ENLEVER
     localStorage.setItem('token', token);
     console.log('💾 stored user:', user);
 
