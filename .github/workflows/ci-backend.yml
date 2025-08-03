@@ -1,0 +1,33 @@
+name: ci-backend
+
+# déclenchement à la demande
+on:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Installer les dépendances du backend
+        run: npm ci
+        working-directory: backend
+
+      - name: Lancer les tests avec couverture
+        run: npm run test:ci
+        working-directory: backend
+
+      - name: Sauvegarder le rapport de couverture
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: couverture-backend
+          path: backend/coverage
