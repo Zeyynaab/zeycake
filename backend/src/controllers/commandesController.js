@@ -1,7 +1,7 @@
-// src/controllers/commandesController.js
 const mongoose = require('mongoose');
 const Commande = require('../models/commandes');
 
+//Creation de commande pour luser connecté
 exports.createCommande = async (req, res, next) => {
   try {
     const { produits, adresse, commentaires, dateRecuperation } = req.body;
@@ -35,7 +35,7 @@ exports.createCommande = async (req, res, next) => {
   }
 };
 
-
+//Recupere toutes les commandes pour admin
 exports.getAllCommandes = async (req, res, next) => {
   try {
     const commandes = await Commande.find();
@@ -45,6 +45,7 @@ exports.getAllCommandes = async (req, res, next) => {
   }
 };
 
+//Recupere une commande par son Id
 exports.getCommandeById = async (req, res, next) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -61,17 +62,17 @@ exports.getCommandeById = async (req, res, next) => {
   }
 };
 
-// Commandes du client connecté
+// Recupere les commandes du client connecté
 exports.getMesCommandes = async (req, res, next) => {
   try {
-    const userId = req.user.id; // ou req.user._id, les deux fonctionnent avec Mongoose
+    const userId = req.user.id; 
     const commandes = await Commande.find({ clientId: userId });
     res.status(200).json(commandes);
   } catch (err) {
     next(err);
   }
 };
-
+//Met a jour une commande existante par ID
 exports.updateCommande = async (req, res, next) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -92,6 +93,7 @@ exports.updateCommande = async (req, res, next) => {
   }
 };
 
+//Supprime une commande par Id
 exports.deleteCommande = async (req, res, next) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -109,6 +111,7 @@ exports.deleteCommande = async (req, res, next) => {
   }
 };
 
+//MAJ du statu d'une commande
 exports.updateCommandeStatut = async (req, res) => {
   try {
     const { statut } = req.body;

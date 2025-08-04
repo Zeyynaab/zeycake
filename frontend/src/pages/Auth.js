@@ -42,9 +42,8 @@ const Auth = () => {
     // Stockage
     localStorage.removeItem('admin');
     localStorage.setItem('user', JSON.stringify(user));
-    console.log(localStorage.getItem('user')) //ENLEVER
     localStorage.setItem('token', token);
-    console.log('💾 stored user:', user);
+    
 
     showNotification('Connexion réussie !', 'success');
     setTimeout(() => navigate('/'), 1000);

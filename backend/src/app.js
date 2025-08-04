@@ -5,12 +5,12 @@ const helmet     = require('helmet');
 const morgan     = require('morgan');
 const rateLimit  = require('express-rate-limit');
 
-// --- Middlewares persos ---
+// Middlewares persos 
 const authUser     = require('./middleware/authUser');
 const errorHandler = require('./middleware/errorHandler');
 const authClient   = require('./middleware/authClient');
 
-// --- Routeurs ---
+//  Routeurs 
 const authRoutes        = require('./routes/authRoutes');
 const userRoutes        = require('./routes/userRoutes');
 const produitsRoutes    = require('./routes/produits');
@@ -19,7 +19,7 @@ const ingredientsRoutes = require('./routes/ingredients');
 
 const app = express();
 
-// --- Sécurité & logs ---
+// Sécurité et logs
 app.use(cors({
   origin: [
     'http://localhost:3000',
@@ -36,11 +36,11 @@ app.use(rateLimit({
 app.use(helmet());
 app.use(morgan('combined'));
 
-// --- Parsers ---
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// --- Fichiers statiques ---
+// Fichiers statiques
 app.use('/uploads', express.static('uploads', {
   setHeaders: (res) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://heartfelt-cendol-7cd5c1.netlify.app');
@@ -49,16 +49,16 @@ app.use('/uploads', express.static('uploads', {
   }
 }));
 
-// --- Routes publiques ---
+// Routes publiques 
 app.use('/api/auth', authRoutes);
 app.use('/api/produits', produitsRoutes);
 
-// --- Routes protégées (clients & admins) ---
+// Routes protégées (clients et admins) 
 app.use('/api/users', authUser, userRoutes);
 app.use('/api/commandes', authUser, commandesRoutes);
 app.use('/api/ingredients', authUser, ingredientsRoutes);
 
-// --- Root endpoint ---
+// Routes endpoint
 app.get('/', (req, res) => {
   res.json({
     message: 'API ZeyCake - Bienvenue!',
@@ -73,7 +73,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// --- Gestion des erreurs (dernier middleware) ---
+// Gestion des erreurs
 app.use(errorHandler);
 
 module.exports = app;

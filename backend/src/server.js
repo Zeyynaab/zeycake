@@ -1,10 +1,9 @@
-// src/server.js
 require('dotenv').config();   
 // Charge .env en local ou variables d’env prod
 const mongoose = require('mongoose');
 const app = require('./app');
 
-// On supporte plusieurs noms de variable selon l’hébergeur
+// Supporte plusieurs noms de variable selon l’hébergeur
 const uri =
   process.env.MONGO_URI ||
   process.env.MONGODB_URI ||
@@ -17,8 +16,7 @@ if (!uri) {
   process.exit(1);
 }
 
-// DEBUG
-console.log('URI Mongo utilisée :', uri);
+
 /* istanbul ignore next */
 //Bloc de connexion a mongoDB
 mongoose

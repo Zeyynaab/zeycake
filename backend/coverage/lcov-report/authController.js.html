@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">92.85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/30</span>
+                <span class='fraction'>26/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/10</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">92.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/30</span>
+                <span class='fraction'>26/28</span>
             </div>
         
             
@@ -132,16 +132,7 @@
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -149,6 +140,7 @@
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
@@ -173,7 +165,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,16 +173,12 @@
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
@@ -202,10 +189,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -217,8 +201,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// controllers/authController.js
-const bcrypt = require('bcryptjs');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const user = require('../models/user');
@@ -226,12 +209,13 @@ const user = require('../models/user');
 exports.register = async (req, res) =&gt; {
   try {
     const { nom, email, password, role } = req.body;
-//VERIFIER SI L USER EXISTE DEJA 
+&nbsp;
+//Verifier si l'user existe deja
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'Utilisateur déjà existant.' });
     }
-    //HASHER LE MDP ET CREER L USER
+    //Hasher le mdp et creer l'user
     const hashedPassword = await bcrypt.hash(password, 10);
 &nbsp;
     const newUser = new User({
@@ -243,14 +227,13 @@ exports.register = async (req, res) =&gt; {
     });
 &nbsp;
     await newUser.save();
-    //RETOUR JEST
+    //Retour jest
     return res.status(201).json({ message : 'Utilisateur créé avec succès',
       user: newUser
 &nbsp;
   }); 
 &nbsp;
 } catch (err) {
-  //console.error(err);
 <span class="cstat-no" title="statement not covered" >    return res.status(500).json({ message: 'Erreur serveur', error: err.message });</span>
   }
 };
@@ -259,17 +242,13 @@ exports.login = async (req, res) =&gt; {
   try {
     console.log('Tentative de login reçue, body =', req.body);
     const { email, password } = req.body;
-    //console.log("Tentative de connexion :", email, password); //a enelver apres
-&nbsp;
-&nbsp;
     const user = await User.findOne({ email });
-    console.log('Utilisateur trouvé:', user ? user.email : null); //ENLEVER
+  
     
     if (!user){ 
       return res.status(401).json({ message: 'Email ou mot de passe invalide.' });
   }
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log('Résultat comparaison password:', isMatch); //ENLEVER
     
     if (!isMatch) {
       return res.status(401).json({ message: 'Email ou mot de passe invalide.' });
@@ -279,8 +258,6 @@ exports.login = async (req, res) =&gt; {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || <span class="branch-1 cbranch-no" title="branch not covered" >'7d' </span>}
     );
-    //res.status(200).json({ token, user }); 
-    //NEW 
     return res.status(200).json({
       _id: user._id,
       email: user.email,
@@ -288,9 +265,8 @@ exports.login = async (req, res) =&gt; {
       prenom: user.prenom,
       role: user.role,
       token,
-    }); //FIN NEW
+    }); 
   } catch (err) {
-    //console.error(err); 
 <span class="cstat-no" title="statement not covered" >    return res.status(500).json({ message: 'Erreur serveur', error: err.message });</span>
   }
 };
@@ -301,7 +277,7 @@ exports.login = async (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-03T21:44:29.927Z
+                at 2025-08-04T03:35:23.193Z
             </div>
         <script src="prettify.js"></script>
         <script>

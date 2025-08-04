@@ -3,7 +3,7 @@ const app = require('../../src/app');
 let token;
 let createdId;
 
-describe('🍰 Produits – Tests CRUD', () => {
+describe(' Produits – Tests CRUD', () => {
   // Données de base pour tester la création d'un produit
   const produitTest = {
     nom: 'Éclair au chocolat',
@@ -17,7 +17,7 @@ describe('🍰 Produits – Tests CRUD', () => {
   };
 
   beforeAll(async () => {
-    // Créer un admin de test et récupérer le JWT
+    // Création  d'un admin de test 
     await request(app)
       .post('/api/auth/register')
       .send({ prenom: 'Admin', nom: 'Test', email: 'admin@test.com', password: 'Admin1234' });
@@ -27,8 +27,8 @@ describe('🍰 Produits – Tests CRUD', () => {
     token = res.body.token;
   });
 
-  // Création : doit renvoyer 201 et contenir le produit créé
-  it('POST /api/produits → crée un produit (201)', async () => {
+
+  it('POST /api/produits crée un produit (201)', async () => {
     const res = await request(app)
       .post('/api/produits')
       .set('Authorization', `Bearer ${token}`)
@@ -51,8 +51,8 @@ describe('🍰 Produits – Tests CRUD', () => {
     expect(res.body.some(p => p._id === createdId)).toBe(true);
   });
 
-  // Mise à jour : doit renvoyer 200 et le produit mis à jour
-  it('PUT /api/produits/:id → met à jour le prix (200)', async () => {
+  // Mise à jour 
+  it('PUT /api/produits/:id  met à jour le prix (200)', async () => {
     const newPrix = 5.0;
     const res = await request(app)
       .put(`/api/produits/${createdId}`)
@@ -64,7 +64,7 @@ describe('🍰 Produits – Tests CRUD', () => {
   });
 
   // Suppression : doit renvoyer 200 et un message de succès
-  it('DELETE /api/produits/:id → supprime le produit (200)', async () => {
+  it('DELETE /api/produits/:id supprime le produit (200)', async () => {
     const res = await request(app)
       .delete(`/api/produits/${createdId}`)
       .set('Authorization', `Bearer ${token}`);
@@ -73,7 +73,7 @@ describe('🍰 Produits – Tests CRUD', () => {
   });
 
   // Après suppression : récupération → 404 Not Found
-  it('GET /api/produits/:id après suppression → 404', async () => {
+  it('GET /api/produits/:id après suppression 404', async () => {
     const res = await request(app)
       .get(`/api/produits/${createdId}`)
       .set('Authorization', `Bearer ${token}`);
@@ -81,18 +81,18 @@ describe('🍰 Produits – Tests CRUD', () => {
     expect(res.body).toHaveProperty('message', 'Produit non trouvé');
   });
 
-  // ==== Tests d'erreurs pour couvrir les branches non-testées ====
+  //Tests d'erreurs
 
-  // GET avec ID mal formé → 400 Bad Request
-  it('GET produit avec ID invalide → 400', async () => {
+  // GET avec ID mal formé 
+  it('GET produit avec ID invalide 400', async () => {
     const res = await request(app)
       .get('/api/produits/12345')
       .set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(400);
   });
 
-  // GET avec ID inexistant → 404 Not Found
-  it('GET produit avec ID inexistant → 404', async () => {
+  // GET avec ID inexistant 
+  it('GET produit avec ID inexistant 404', async () => {
     const fakeId = '000000000000000000000000';
     const res = await request(app)
       .get(`/api/produits/${fakeId}`)
@@ -100,8 +100,8 @@ describe('🍰 Produits – Tests CRUD', () => {
     expect(res.status).toBe(404);
   });
 
-  // PUT avec ID invalide → 400 Bad Request
-  it('PUT produit avec ID invalide → 400', async () => {
+  // PUT avec ID invalide
+  it('PUT produit avec ID invalide 400', async () => {
     const res = await request(app)
       .put('/api/produits/xyz')
       .set('Authorization', `Bearer ${token}`)

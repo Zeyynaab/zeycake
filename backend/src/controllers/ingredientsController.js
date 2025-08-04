@@ -1,11 +1,9 @@
-// src/controllers/ingredientController.js
 const Ingredient = require('../models/ingredients');
 
-// GET tous les ingrédients
+// Recup tous les ingrédients
 exports.getAllIngredients = async (req, res) => {
   try {
     const ingredients = await Ingredient.find();
-    // renommer stock en quantite
     const result = ingredients.map(doc => {
       const obj = doc.toObject();
       obj.quantite = obj.stock;
@@ -18,7 +16,7 @@ exports.getAllIngredients = async (req, res) => {
   }
 };
 
-// GET ingrédient par ID
+// Recup ingrédient par ID
 exports.getIngredientById = async (req, res) => {
   try {
     const ing = await Ingredient.findById(req.params.id);
@@ -34,7 +32,7 @@ exports.getIngredientById = async (req, res) => {
 };
 
 
-// POST créer un ingrédient
+// Créer un ingrédient
 exports.createIngredient = async (req, res) => {
   try {
     const { nom, unite, quantite } = req.body;
@@ -52,12 +50,11 @@ exports.createIngredient = async (req, res) => {
     delete obj.stock;
     res.status(201).json(obj);
   } catch (error) {
-    console.error('createIngredient error:', error); //ENLEVER
     res.status(500).json({ message: 'Erreur création ingrédient', error: error.message });
   }
 };
 
-// PUT mettre à jour un ingrédient complet
+// MAJ un ingrédient complet
 exports.updateIngredient = async (req, res) => {
   try {
     const updateData = { ...req.body };
@@ -80,7 +77,7 @@ exports.updateIngredient = async (req, res) => {
    }
  };
 
-// DELETE ingrédient
+// Supprimer un  ingrédient
 exports.deleteIngredient = async (req, res) => {
   try {
     const deleted = await Ingredient.findByIdAndDelete(req.params.id);

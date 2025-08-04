@@ -25,7 +25,7 @@ services:
     volumes:
       # Montage du code local pour dev
       - .:/usr/src/app
-      # Empêche l'écrasement de node_modules du conteneur 
+      # Empêche l'écrasement de node modules du conteneur 
       - /usr/src/app/node_modules
     command: npm start
     working_dir: /usr/src/app

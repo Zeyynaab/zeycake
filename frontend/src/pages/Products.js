@@ -11,9 +11,9 @@ const Products = () => {
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [sortOrder, setSortOrder] = useState('');
-  const [showFilters, setShowFilters] = useState(false); // 👈 Pour mobile
+  const [showFilters, setShowFilters] = useState(false); 
 
-  // 🔄 Charger produits
+  //  Charger produits
   useEffect(() => {
     fetchProduits()
       .then(res => {
@@ -23,7 +23,7 @@ const Products = () => {
       .catch(error => console.error('Erreur:', error));
   }, []);
 
-  // 🎯 Appliquer filtres
+  // Appliquer filtres
   useEffect(() => {
     let result = [...products];
 
@@ -48,7 +48,7 @@ const Products = () => {
     setFilteredProducts(result);
   }, [selectedCategory, minPrice, maxPrice, sortOrder, products]);
 
-  // 📋 Catégories uniques
+  
   const categoriesDisponibles = ['Toutes', ...new Set(products.map(p => p.categorie))];
 
   return (
@@ -91,14 +91,14 @@ const Products = () => {
           </div>
         </div>
 
-        {/* ✅ Grille des produits */}
+        {/* Grille des produits */}
         <div className="produits-grid">
           {filteredProducts.map(product => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
         </div>
-        {/* ✅ BOUTON MOBILE pour filtres (placé ici après les produits) */}
+        {/*  BOUTON MOBILE pour filtres */}
         <div className="filter-toggle-mobile">
           <button onClick={() => setShowFilters(!showFilters)}>
             {showFilters ? 'Masquer les filtres' : 'Afficher les filtres'}

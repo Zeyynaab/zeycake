@@ -1,8 +1,8 @@
-// routes/authRoutes.js
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 const admin = require('../middleware/admin'); 
+
 // Route pour l'inscription
 router.post('/register', authController.register);
 

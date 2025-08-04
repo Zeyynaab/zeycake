@@ -1,7 +1,6 @@
-// src/controllers/produitsController.js
-
 const Produit = require('../models/produits');
 
+//Recup tous les produits
 exports.getAllProduits = async (req, res) => {
   try {
     const produits = await Produit.find();
@@ -14,6 +13,7 @@ exports.getAllProduits = async (req, res) => {
   }
 };
 
+//Recup un produit par ID
 exports.getProduitById = async (req, res) => {
   try {
     const produit = await Produit.findById(req.params.id);
@@ -29,6 +29,7 @@ exports.getProduitById = async (req, res) => {
   }
 };
 
+//Recup les produits vedette
 exports.getFeaturedProducts = async (req, res) => {
   try {
     const vedettes = await Produit.find({ vedette: true }).limit(4);
@@ -41,6 +42,7 @@ exports.getFeaturedProducts = async (req, res) => {
   }
 };
 
+//Recup les categories de produit
 exports.getCategories = async (req, res) => {
   try {
     const categories = await Produit.distinct('categorie');
@@ -53,6 +55,7 @@ exports.getCategories = async (req, res) => {
   }
 };
 
+//Creer un nouveau produit
 exports.createProduit = async (req, res) => {
   try {
     const {
@@ -68,7 +71,7 @@ exports.createProduit = async (req, res) => {
     } = req.body;
 
     const vedetteBool = vedette === 'true' || vedette === true;
-    const image       = req.file ? req.file.filename : req.body.image;
+    const image = req.file ? req.file.filename : req.body.image;
 
     const nouveauProduit = new Produit({
       nom,
@@ -91,7 +94,6 @@ exports.createProduit = async (req, res) => {
     });
 
   } catch (error) {
-    //console.error('Erreur createProduit ➞', error);
     return res.status(500).json({
       message: 'Erreur lors de la création',
       error: error.message
@@ -99,6 +101,7 @@ exports.createProduit = async (req, res) => {
   }
 };
 
+//Maj un produit existant
 exports.updateProduit = async (req, res) => {
   try {
     const updateData = { ...req.body };
@@ -127,6 +130,7 @@ exports.updateProduit = async (req, res) => {
   }
 };
 
+//Supprimer un produit
 exports.deleteProduit = async (req, res) => {
   try {
     const deleted = await Produit.findByIdAndDelete(req.params.id);

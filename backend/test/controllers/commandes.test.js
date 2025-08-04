@@ -3,8 +3,8 @@ const app = require('../../src/app');
 let token;
 let createdId;
 
-describe('🚚 Commandes – Tests CRUD', () => {
-  // jeu de données pour tester la création d'une commande
+describe('Commandes – Tests CRUD', () => {
+  
   const commandeTest = {
     produits: [
       { nom: 'Cheesecake pistache', qte: 1, prix: 25 },
@@ -15,20 +15,19 @@ describe('🚚 Commandes – Tests CRUD', () => {
   };
 
   beforeAll(async () => {
-    // on enregistre un utilisateur de test pour obtenir un token JWT
-    const email = `cmd.tester+${Date.now()}@test.com`; // rendre unique pour éviter conflit
+    // enregistrer un utilisateur de test pour obtenir un token JWT
+    const email = `cmd.tester+${Date.now()}@test.com`; 
     await request(app)
       .post('/api/auth/register')
       .send({ prenom: 'Cmd', nom: 'Tester', email, password: 'Cmd1234' });
 
-    // on se connecte avec cet utilisateur pour récupérer le token
     const res = await request(app)
       .post('/api/auth/login')
       .send({ email, password: 'Cmd1234' });
     token = res.body.token;
   });
 
-  it('POST /api/commandes → crée une commande (201)', async () => {
+  it('POST /api/commandes crée une commande (201)', async () => {
     const res = await request(app)
       .post('/api/commandes')
       .set('Authorization', `Bearer ${token}`)
@@ -41,7 +40,7 @@ describe('🚚 Commandes – Tests CRUD', () => {
     createdId = res.body._id;
   });
 
-  it('GET /api/commandes → récupère toutes les commandes (200)', async () => {
+  it('GET /api/commandes récupère toutes les commandes (200)', async () => {
     const res = await request(app)
       .get('/api/commandes')
       .set('Authorization', `Bearer ${token}`);
@@ -51,7 +50,7 @@ describe('🚚 Commandes – Tests CRUD', () => {
     expect(res.body.some(c => c._id === createdId)).toBe(true);
   });
 
-  it('GET /api/commandes/:id → récupère une commande par ID (200)', async () => {
+  it('GET /api/commandes/:id récupère une commande par ID (200)', async () => {
     const res = await request(app)
       .get(`/api/commandes/${createdId}`)
       .set('Authorization', `Bearer ${token}`);
@@ -60,7 +59,7 @@ describe('🚚 Commandes – Tests CRUD', () => {
     expect(res.body._id).toBe(createdId);
   });
 
-  it("PUT /api/commandes/:id → met à jour l'adresse (200)", async () => {
+  it("PUT /api/commandes/:id met à jour l'adresse (200)", async () => {
     const newAdresse = '456 Rue Modifiée';
     const res = await request(app)
       .put(`/api/commandes/${createdId}`)
@@ -71,7 +70,7 @@ describe('🚚 Commandes – Tests CRUD', () => {
     expect(res.body.adresse).toBe(newAdresse);
   });
 
-  it('DELETE /api/commandes/:id → supprime la commande (204)', async () => {
+  it('DELETE /api/commandes/:id supprime la commande (204)', async () => {
     const res = await request(app)
       .delete(`/api/commandes/${createdId}`)
       .set('Authorization', `Bearer ${token}`);
@@ -79,7 +78,7 @@ describe('🚚 Commandes – Tests CRUD', () => {
     expect(res.status).toBe(204);
   });
 
-  it("GET /api/commandes/:id après suppression → 404", async () => {
+  it("GET /api/commandes/:id après suppression  404", async () => {
     const res = await request(app)
       .get(`/api/commandes/${createdId}`)
       .set('Authorization', `Bearer ${token}`);
@@ -89,14 +88,14 @@ describe('🚚 Commandes – Tests CRUD', () => {
 
   // erreurs
 
-  it('GET commande avec ID invalide → 400', async () => {
+  it('GET commande avec ID invalide 400', async () => {
     const res = await request(app)
       .get('/api/commandes/12345')
       .set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(400);
   });
 
-  it('GET commande avec ID inexistant → 404', async () => {
+  it('GET commande avec ID inexistant 404', async () => {
     const fakeId = '000000000000000000000000';
     const res = await request(app)
       .get(`/api/commandes/${fakeId}`)
@@ -105,7 +104,7 @@ describe('🚚 Commandes – Tests CRUD', () => {
     expect(res.status).toBe(404);
   });
 
-  it('PUT commande avec ID invalide → 400', async () => {
+  it('PUT commande avec ID invalide  400', async () => {
     const res = await request(app)
       .put('/api/commandes/xyz')
       .set('Authorization', `Bearer ${token}`)

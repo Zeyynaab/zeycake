@@ -1,8 +1,7 @@
-// config/mongoose.js
 const mongoose = require('mongoose');
 
 const connectMongo = async () => {
-  // Ne pas se connecter automatiquement en test (MongoMemoryServer s'en charge)
+  // Ne pas se connecter automatiquement en test 
   if (process.env.NODE_ENV === 'test') return;
 
   if (mongoose.connection.readyState === 0) {
@@ -10,7 +9,7 @@ const connectMongo = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('✅ Connecté à MongoDB Atlas');
+    console.log('Connecté à MongoDB Atlas');
   }
 };
 

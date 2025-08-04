@@ -13,7 +13,7 @@ function ClientsAdmin() {
     password: '',
   });
   const [selectedId, setSelectedId] = useState(null);
-  const [message, setMessage] = useState(null); // <-- ajout
+  const [message, setMessage] = useState(null); 
 
   useEffect(() => {
     fetchClients();
@@ -106,7 +106,7 @@ function ClientsAdmin() {
         </button>
       </form>
 
-      {/* <-- affichage du message ici */}
+      
       {message && <div className="notification">{message}</div>}
 
       <table className="admin-table">

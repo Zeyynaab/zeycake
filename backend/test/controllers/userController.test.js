@@ -16,7 +16,7 @@ describe('👥 Utilisateurs – Tests GET', () => {
     createdUserId = res.body.id || res.body._id;
   });
 
-  // Lecture de la liste : 200 et tableau contenant notre user
+  // Lecture de la liste 
   it('GET /api/users → liste les utilisateurs (200)', async () => {
     const res = await request(app).get('/api/users').set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(200);
@@ -24,36 +24,36 @@ describe('👥 Utilisateurs – Tests GET', () => {
     expect(res.body.some(u => u._id === createdUserId)).toBe(true);
   });
 
-  // Lecture par ID : 200 et correspondance de l'_id
+  // Lecture par ID 
   it('GET /api/users/:id → récupère un utilisateur par ID (200)', async () => {
     const res = await request(app).get(`/api/users/${createdUserId}`).set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(200);
     expect(res.body._id).toBe(createdUserId);
   });
 
-  // ==== Tests d'erreurs pour augmenter la couverture ====
+  // Tests d'erreurs 
 
-  // ID mal formé → 400 Bad Request
-  it('GET utilisateur avec ID invalide → 400', async () => {
+  // ID mal formé 
+  it('GET utilisateur avec ID invalide 400', async () => {
     const res = await request(app).get('/api/users/12345').set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(400);
   });
 
-  // ID inexistant → 404 Not Found
-  it('GET utilisateur avec ID inexistant → 404', async () => {
+  // ID inexistant 
+  it('GET utilisateur avec ID inexistant 404', async () => {
     const fakeId = '000000000000000000000000';
     const res = await request(app).get(`/api/users/${fakeId}`).set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(404);
   });
 
-    // Accès sans token → 401 Unauthorized
-  it('GET /api/users sans token → 401', async () => {
+    // Accès sans token 
+  it('GET /api/users sans token 401', async () => {
     const res = await request(app).get('/api/users');
     expect(res.status).toBe(401);
   });
 
-  // Accès avec token invalide → 401 Unauthorized
-  it('GET /api/users avec token invalide → 401', async () => {
+  // Accès avec token invalide 
+  it('GET /api/users avec token invalide 401', async () => {
     const res = await request(app)
       .get('/api/users')
       .set('Authorization', 'Bearer token_invalide');

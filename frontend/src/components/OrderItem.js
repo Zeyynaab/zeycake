@@ -1,6 +1,6 @@
 import React from 'react';
 import '../style/global.css';
-//import API from '../api/api';
+
 
 const OrderItem = ({ order, onDelete }) => {
 

@@ -172,12 +172,16 @@
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
 <a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -213,6 +217,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,6 +228,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -242,27 +248,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -281,11 +289,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// src/controllers/userController.js
-const mongoose = require('mongoose');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const mongoose = require('mongoose');
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 &nbsp;
+//Creation d'un user
 exports.createUser = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
 <span class="cstat-no" title="statement not covered" >  try {</span>
     const { nom, prenom, email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
@@ -305,7 +313,7 @@ exports.createUser = <span class="fstat-no" title="function not covered" >as</sp
       prenom,
       email,
       password: hashed,
-      role: 'client', // forcer client
+      role: 'client', 
     });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    await newUser.save();</span>
@@ -325,6 +333,7 @@ exports.createUser = <span class="fstat-no" title="function not covered" >as</sp
   }
 };
 &nbsp;
+// Récupère tous les utilisateurs
 &nbsp;
 exports.getAllUsers = async (req, res, next) =&gt; {
   try {
@@ -335,6 +344,7 @@ exports.getAllUsers = async (req, res, next) =&gt; {
   }
 };
 &nbsp;
+// Récupère un utilisateur 
 exports.getUserById = async (req, res, next) =&gt; {
   const { id } = req.params;
   <span class="missing-if-branch" title="if path not taken" >I</span>if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -351,6 +361,7 @@ exports.getUserById = async (req, res, next) =&gt; {
   }
 };
 &nbsp;
+// Maj un utilisateur existant 
 exports.updateUser = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
   const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
 <span class="cstat-no" title="statement not covered" >  if (!mongoose.Types.ObjectId.isValid(id)) {</span>
@@ -370,23 +381,24 @@ exports.updateUser = <span class="fstat-no" title="function not covered" >as</sp
   }
 };
 &nbsp;
+//Supprimer un user
 exports.deleteUser = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
   const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-  // 1. format
+  // format
 <span class="cstat-no" title="statement not covered" >  if (!mongoose.Types.ObjectId.isValid(id)) {</span>
 <span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: 'ID invalide' });</span>
   }
-  // 2. existe ?
+  // existe ?
   const user = <span class="cstat-no" title="statement not covered" >await User.findById(id);</span>
 <span class="cstat-no" title="statement not covered" >  if (!user) {</span>
 <span class="cstat-no" title="statement not covered" >    return res.status(404).json({ message: 'Utilisateur introuvable' });</span>
   }
-  // 3. autorisation
+  // autorisation
 <span class="cstat-no" title="statement not covered" >  if (req.user.id !== id &amp;&amp; req.user.role !== 'admin') {</span>
 <span class="cstat-no" title="statement not covered" >  return res.status(401).json({ message: 'Non autorisé' });</span>
 }
 &nbsp;
-  // 4. suppression
+  // suppression
 <span class="cstat-no" title="statement not covered" >  await User.findByIdAndDelete(id);</span>
 <span class="cstat-no" title="statement not covered" >  res.status(204).end();</span>
 };
@@ -397,7 +409,7 @@ exports.deleteUser = <span class="fstat-no" title="function not covered" >as</sp
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-03T21:44:29.927Z
+                at 2025-08-04T03:35:23.193Z
             </div>
         <script src="prettify.js"></script>
         <script>

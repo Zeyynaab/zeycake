@@ -1,4 +1,4 @@
-// src/routes/commandes.js
+
 const express               = require('express');
 const router                = express.Router();
 const commandesController   = require('../controllers/commandesController');
@@ -6,14 +6,14 @@ const authUser              = require('../middleware/authUser');
 const admin                 = require('../middleware/admin');
 const { validateParams, schemas } = require('../middleware/validation');
 
-// CREATE – POST /api/commandes
+//POST /api/commandes
 router.post(
   '/',
   authUser,
   commandesController.createCommande
 );
 
-// READ ALL – GET /api/commandes
+// GET /api/commandes
 router.get(
   '/',
   authUser,
@@ -27,7 +27,7 @@ router.get(
   commandesController.getMesCommandes
 );
 
-// READ ONE – GET /api/commandes/:id
+// GET /api/commandes/:id
 router.get(
   '/:id',
   authUser,
@@ -35,7 +35,7 @@ router.get(
   commandesController.getCommandeById
 );
 
-// UPDATE (adresse) – PUT /api/commandes/:id
+// PUT /api/commandes/:id
 router.put(
   '/:id',
   authUser,
@@ -43,7 +43,7 @@ router.put(
   commandesController.updateCommande
 );
 
-// UPDATE (statut) – PUT /api/commandes/:id/statut (admin only)
+
 router.put(
   '/:id/statut',
   authUser,
@@ -52,7 +52,7 @@ router.put(
   commandesController.updateCommandeStatut
 );
 
-// DELETE – DELETE /api/commandes/:id
+// DELETE /api/commandes/:id
 router.delete(
   '/:id',
   authUser,

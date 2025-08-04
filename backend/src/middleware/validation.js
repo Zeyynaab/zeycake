@@ -1,4 +1,3 @@
-// middleware/validation.js
 const Joi = require('joi');
 
 // Schémas

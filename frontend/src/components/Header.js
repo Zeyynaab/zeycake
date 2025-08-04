@@ -1,4 +1,3 @@
-// src/components/Header.js pour les pages
 import React,{useState} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../style/global.css';
@@ -32,7 +31,7 @@ const Header = () => {
             to="/"
             onClick={() => {
               localStorage.removeItem("user");
-              localStorage.removeItem("token"); // si tu stockes le token
+              localStorage.removeItem("token"); 
               window.location.href = "/";
             }}
 

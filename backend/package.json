@@ -5,8 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/server.js", 
-    "test" :"NODE_ENV=test jest --runInBand",
-    "test:ci": "NODE_ENV=test jest --coverage --runInBand --testTimeout=30000"
+    "test:ci": "NODE_ENV=test jest --coverage --runInBand --testTimeout=30000",
+    "test": "npm run test:ci"
     },
   "dependencies": {
     "bcryptjs": "^3.0.2",

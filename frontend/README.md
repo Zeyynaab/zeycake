@@ -2,17 +2,17 @@
 
 ## Description du projet
 
-ZeyCake est une application web de commande de pâtisseries faite maison. L’utilisateur peut se connecter / s’inscrire, parcourir les produits, gérer un panier, passer à la caisse et consulter ses commandes. Le frontend est une interface réactive en React qui communique avec une API sécurisée (JWT) pour l’authentification et la gestion des données. Ce projet met en œuvre une application complète dans l’architecture MERN, avec déploiement en ligne.
+ZeyCake est une application web de commande de pâtisseries faite maison. L’utilisateur peut se connecter / s’inscrire, parcourir les produits, gérer un panier, passer à la caisse et consulter ses commandes.  Ce projet met en œuvre une application complète dans l’architecture MERN, avec déploiement en ligne.
 
 ## Description (frontend)
-
-- Authentification (inscription / connexion) avec gestion de session via JWT. 
-- Navigation client avec React Router (produits, panier, checkout, commandes). 
-- Gestion du panier  
-- Passage à la caisse et création de commande, avec validation et feedback utilisateur.  
-- Affichage des commandes de l’utilisateur connecté.  
-- Header dynamique affichant « Salut, {prénom} ! » selon l’utilisateur connecté.  
-- Interactions réactives, gestion des erreurs, notifications. 
+Le frontend est une interface réactive en React qui communique avec une API sécurisée pour l’authentification et la gestion des données. Il offre
+- L'authentification (inscription / connexion) avec gestion de session via JWT. 
+- La navigation client avec React Router (produits, panier, checkout, commandes). 
+- La gestion du panier  
+- Le passage à la caisse et création de commande, avec validation et feedback utilisateur.  
+- L'affichage des commandes de l’utilisateur connecté.  
+- Un Header affichant « Salut, {prénom} ! » selon l’utilisateur connecté.  
+- Des interactions réactives, gestion des erreurs, notifications. 
 
 
 ## Description (backend)
@@ -22,13 +22,6 @@ Le backend est une API REST en Node.js/Express qui gère :
 - La consultation des commandes.  
 - La sécurisation des routes (JWT, rôles) et une limitation de requêtes en développement pour éviter les abus (rate limiting).
 
-### Endpoints principaux
-- `POST /api/auth/login` : authentification, renvoie un token JWT et les données utilisateur.  
-- `POST /api/auth/register` : création de compte client.  
-- `GET /api/produits` et `GET /api/produits/:id` : liste et détail des produits.  
-- `POST /api/commandes` : passer une commande (client connecté).  
-- `GET /api/commandes/mes-commandes` : récupérer les commandes du client connecté.  
-- `GET /api/commandes` : (admin) consulter toutes les commandes.  
   
 ##  Instruction d'installation locale
 
@@ -56,7 +49,8 @@ Docker (pour lancer le backend en conteneur)
 3. Configurer et lancer le frontend :
    cd frontend 
    npm install 
- - Lancer l'interface
+ - Lancer l'interface :
+   npm start
 
 
 ## Technologies utilisées
@@ -67,7 +61,7 @@ Docker (pour lancer le backend en conteneur)
 - JWT : pour l’authentification sécurisée.  
 - CSS : personnalisé pour le style.  
 - LocalStorage : pour le panier et les sessions
-- Docker pour le backend 
+- Docker et MongoDB pour le backend 
 - Node.js / Express
 - Déploiement : : Netlify pour le frontend et Railway pour le backend.  
 - Git / GitHub : pour le versionnement 
@@ -90,3 +84,7 @@ Docker (pour lancer le backend en conteneur)
 - Consulter ses commandes.
 - Voir la salutation personnalisée.
 - Se déconnecter et se reconnecter.
+
+## Comment se connecter en admin 
+- Nom d'utilisasteur : zeycake@patisserie.com
+- MDP : Admin123!

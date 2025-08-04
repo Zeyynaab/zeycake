@@ -6,7 +6,6 @@
   justify-content: center;
   height: 100vh;
   padding: 2rem;
-  /*background: linear-gradient(145deg, #fff7f3, #ffe7dd);*/
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -132,7 +131,7 @@
 .admin-navbar-links li a:hover,
 .admin-navbar-links li button:hover,
 .compte-link:hover {
-  color: #475270; /*avant fad5c6*/
+  color: #475270; /*fad5c6*/
 }
 
 /* Dropdown Compte */
@@ -162,7 +161,7 @@
 }
 
 .compte-menu button:hover {
-  color: #245779; /*avant ffcc70*/
+  color: #245779; /*ffcc70*/
 }
 
 /* HAMBURGER RESPONSIVE */
@@ -179,7 +178,7 @@
     top: 60px;
     left: 0;
     right: 0;
-    background-color: rgba(31, 42, 56, 0.95); /* transparent */
+    background-color: rgba(31, 42, 56, 0.95); 
     padding: 20px;
     backdrop-filter: blur(5px);
     border-bottom: 1px solid #444;
@@ -218,7 +217,7 @@
 .admin-dashboard h1 {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  color: #4e5051; /*avant 3d1f13*/
+  color: #4e5051; /*3d1f13*/
 }
 
 .admin-dashboard p {
@@ -236,7 +235,7 @@
 }
 
 .admin-links a {
-  background: linear-gradient(135deg, #253f61); /*avant e18d75*/
+  background: linear-gradient(135deg, #253f61); /*e18d75*/
   color: #fff;
   text-decoration: none;
   padding: 1.5rem 2rem;
@@ -351,7 +350,7 @@
 
 /* === BOUTON SUBMIT === */
 .admin-form button {
-  background-color: #1c2453; /*avant 3f51b5*/
+  background-color: #1c2453; /*3f51b5*/
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -435,7 +434,7 @@
   .admin-form input,
   .admin-form select,
   .admin-form textarea {
-    flex: none !important;         /* ✅ Désactive le flex */
+    flex: none !important;         
     width: 100%;
     height: 36px;
     font-size: 13px;
@@ -467,7 +466,7 @@
 
 
   .btn-delete {
-    margin-top: 4px; /* ➕ espace vertical entre les boutons */
+    margin-top: 4px; /* espace vertical entre les boutons */
   }
 
   .checkbox-group {
@@ -480,7 +479,7 @@
   .checkbox-label input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: #3f51b5; /* couleur bleue pro */
+  accent-color: #3f51b5; 
   cursor: pointer;
 }
 

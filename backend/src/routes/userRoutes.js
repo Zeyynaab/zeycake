@@ -1,4 +1,3 @@
-// src/routes/userRoutes.js
 const express        = require('express');
 const router         = express.Router();
 const authUser       = require('../middleware/authUser');  
@@ -13,9 +12,9 @@ router.get('/', authUser, userController.getAllUsers);
 router.post('/', authUser, admin, userController.createUser);
 
 // Lecture / mise à jour / suppression
-router
-  .get('/:id', authUser, validateParams(schemas.id), userController.getUserById)
-  .put('/:id', authUser, validateParams(schemas.id), userController.updateUser)
-  .delete('/:id', authUser, validateParams(schemas.id), userController.deleteUser);
+
+  router.get('/:id', authUser, validateParams(schemas.id), userController.getUserById);
+  router.put('/:id', authUser, validateParams(schemas.id), userController.updateUser);
+  router.delete('/:id', authUser, validateParams(schemas.id), userController.deleteUser);
 
 module.exports = router;

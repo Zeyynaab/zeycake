@@ -5,7 +5,7 @@ const ProduitDansCommandeSchema = new Schema({
   nom: { type: String, required: true },
   qte: { type: Number, required: true },
   prix: { type: Number, required: true },
-  produit: { type: Schema.Types.ObjectId, ref: 'Produit' } // optionnel si tu veux linker
+  produit: { type: Schema.Types.ObjectId, ref: 'Produit' } 
 }, { _id: false });
 
 const commandeSchema = new Schema({

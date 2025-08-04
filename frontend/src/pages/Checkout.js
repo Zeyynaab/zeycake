@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/global.css';
-//import axios from 'axios';
-import { passerCommande } from '../api/api'; // ✅ NEW
+import { passerCommande } from '../api/api'; 
 
 function isTokenValid() {
   const stored = JSON.parse(localStorage.getItem('user'));
@@ -29,9 +28,7 @@ const Checkout = () => {
   }
 }, [navigate]);
 
-  // Récupération de l'utilisateur connecté
-  //const user = JSON.parse(localStorage.getItem('user'));
- 
+  
    // Charger l'utilisateur une seule fois
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -65,13 +62,7 @@ const Checkout = () => {
       dateRecuperation,
       adresse,
     };
-console.log(
-  '🔐 Token via key "token":',
-  localStorage.getItem('token'),
-  '— Token via user.token:',
-  JSON.parse(localStorage.getItem('user'))?.token
-);
-console.log('📤 Payload commande :', commande);
+
 
     try {
       await passerCommande(commande);

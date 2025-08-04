@@ -1,22 +1,19 @@
-// frontend/src/test/api.test.js
-
-// 1) Mock du module axios pour qu’il expose un default ESModule
 jest.mock('axios', () => {
-  // instance factice retournée par axios.create()
+  
   const mInstance = {
     get: jest.fn(),
     post: jest.fn(),
     interceptors: { request: { use: jest.fn() } },
   };
   return {
-    __esModule: true,             // indique un module ES
+    __esModule: true,             
     default: {                    // simule l’export default d’axios
       create: jest.fn(() => mInstance),
     },
   };
 });
 
-// 2) Import de tes fonctions API (après le mock)
+// 2) Import des fonctions API 
 import API, {
   login,
   register,

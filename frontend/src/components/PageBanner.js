@@ -1,4 +1,3 @@
-// src/components/PageBanner.js
 import React from 'react';
 import '../style/global.css';
 

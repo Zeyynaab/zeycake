@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
 import OrderItem from '../components/OrderItem';
 import '../style/global.css';
 import PageBanner from '../components/PageBanner';
@@ -19,7 +18,7 @@ function isTokenValid() {
 }
 
 const Orders = () => {
-  //const navigate = useNavigate();
+  
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,7 +27,6 @@ const Orders = () => {
 
   useEffect(() => {
     if (!hasValidToken) {
-      // pas de redirection : on affiche "Aucune commande" plus bas
       setLoading(false);
       return;
     }
@@ -36,7 +34,6 @@ const Orders = () => {
     const load = async () => {
       try {
         const res = await fetchCommandesClient();
-        console.log('📦 Payload commandes :', res.data);
         setOrders(res.data.commandes || res.data);
       } catch (err) {
         console.error(
@@ -45,7 +42,6 @@ const Orders = () => {
           err.response?.data || err.message
         );
         if (err.response?.status === 401) {
-          // token invalide ou expiré : on le nettoie
           localStorage.removeItem('user');
           setError({ message: 'Session invalide ou expirée. Vous pouvez vous reconnecter.' });
         } else {

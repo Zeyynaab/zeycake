@@ -1,4 +1,3 @@
-// models/Product.js
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
@@ -12,7 +11,7 @@ const productSchema = new Schema({
   tempsPreparation: Number,
   difficulte: String,
   disponible: { type: Boolean, default: true },
-  vedette: {type:Boolean, default:false} //nouveau
+  vedette: {type:Boolean, default:false} 
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

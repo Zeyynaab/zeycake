@@ -4,12 +4,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white; /*avant #ffe9e3;*/
-  padding: 0px 30px; /*avant 20px 40px;*/
+  background-color: white; /* #ffe9e3;*/
+  padding: 0px 30px; /*20px 40px;*/
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 1px solid white; /*avant e5b3a4*/
+  border-bottom: 1px solid white; /*e5b3a4*/
 }
 
 .nav-links {
@@ -34,66 +34,10 @@
 
 /*logo zeycake navbar pages*/
 .logo-img {
-  height: 80px; /* ajuste selon la taille souhaitée */
+  height: 80px; 
   object-fit: contain;
 }
 
-
-/* Bouton du header pour les pages */
-/* 🟥 En desktop : on cache le bouton hamburger */
-/* .menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-/*🟢 En responsive (mobile ou petit écran) 
-@media (max-width: 768px) {
-  .main-header {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .menu-toggle {
-    display: block;
-    position: absolute;
-    top: 1rem;
-    right: 1rem; /* ✅ Placé complètement à droite 
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background-color: white;
-    border-radius: 0 0 0 12px;
-    box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 15px 20px;
-    z-index: 999;
-    min-width: 200px;
-    align-items: flex-start;
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .nav-links a {
-    padding: 12px 0;
-    text-align: left;
-    width: 100%;
-    color: #333;
-    font-weight: 500;
-    text-decoration: none;
-  }
-} */
 
 
 
@@ -106,8 +50,8 @@
   background-position: center;
   background-attachment: fixed; /*glisser la banniere*/
   display: flex;
-  justify-content: center; /* centrer horizontalement */
-  align-items: center;     /* centrer verticalement */
+  justify-content: center; 
+  align-items: center;    
   text-align: center;
   animation: slideDown 1s ease-out;
 
@@ -116,8 +60,8 @@
 
 .banner-overlay {
   position: absolute;
-  width: 100%; /* couvre toute la largeur */
-  height: 100%; /* couvre toute la hauteur */
+  width: 100%; 
+  height: 100%; 
   color: #fff;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   display: flex;
@@ -141,7 +85,7 @@
 .banner-title {
   font-size: 48px;
   font-style: italic;
-  font-weight: bold; /*avant 500*/
+  font-weight: bold; /*500*/
   margin-bottom: 20px;
   color: #5a2c1a;
 }
@@ -169,7 +113,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: white; /*avant fff8f4*/
+  background-color: white; /*fff8f4*/
   color: #3d1f13;
 }
 
@@ -418,7 +362,7 @@ ul {
 
 /*A PROPOS SECTION */
 .about-line {
-  background-color: white; /*avant fff8f4, fffafa*/
+  background-color: white; /* fff8f4, fffafa*/
   padding: 5rem 2rem;
 }
 
@@ -497,20 +441,13 @@ ul {
 }
 
 
-/* @media (max-width: 768px) {
-  .about-image img {
-    height: auto;
-    width: 100%;
-    max-width: 350px;
-  }
-} */
 
 
 /* FEATURED PRODUCTS */
 
 .featured-products {
   padding: 80px 40px 30px;
-  background-color: white; /*avant fff1e8 */
+  background-color: white; /* fff1e8 */
   text-align: center;
 }
 
@@ -610,17 +547,14 @@ ul {
 
 /* Produits */
 
-/* ============================= */
-/* 📦 Grille Produits (style ÔFauria amélioré) */
-/* ============================= */
 
 .products-wrapper {
   display: grid;
-  grid-template-columns: 280px 1fr; /*avant 240px 1fr*/
-  gap: 100px; /*avant 30*/
+  grid-template-columns: 280px 1fr; /*a240px 1fr*/
+  gap: 100px; /*30*/
   max-width: 1200px;
   margin: 40px auto 0 auto; /* espacement avec la bannière */
-  padding: 0 24px; /*avant 20 px*/
+  padding: 0 24px; /*20 px*/
   
   
 }
@@ -641,7 +575,7 @@ ul {
 
 .produit-image {
   width: 100%;
-  aspect-ratio: 1 / 1; /* garantit que c’est un carré */
+  aspect-ratio: 1 / 1; 
   object-fit: cover;
   border-radius: 0 !important;
 }
@@ -663,9 +597,9 @@ ul {
 }
 
 
-/* ============================= */
-/* 🧊 Sidebar filtres à gauche */
-/* ============================= */
+
+/* Sidebar filtres à gauche */
+
 
 .filter-sidebar {
   background-color: #f9f9f9;
@@ -712,25 +646,9 @@ ul {
 }
 
 
-/* ============================= */
-/* 📱 Responsive (tablette/mobile) */
-/* ============================= */
 
-/* .filter-toggle-mobile {
-  display: none;
-  text-align: center;
-  margin-top: 20px;
-}
+/* Responsive  */
 
-.filter-toggle-mobile button {
-  background-color: #333;
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-} */
 
 .filter-toggle-mobile {
   display: none;
@@ -806,7 +724,7 @@ ul {
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index: 1100; /*avant 1100*/
+  z-index: 1100; /* 1100*/
   background: #222;
   padding: 16px 0;
   text-align: center;
@@ -1068,7 +986,7 @@ ul {
 
 .auth-container {
   padding: 40px 20px;
-  background-color: white; /*avant #fff4ee */
+  background-color: white; /*#fff4ee */
   min-height: 100vh;
 }
 
@@ -1194,7 +1112,7 @@ ul {
 }
 
 .footer-overlay {
-  background-color: rgba(0, 0, 0, 0.85); /* + sombre */
+  background-color: rgba(0, 0, 0, 0.85); /* sombre */
   width: 100%;
   height: 100%;
   padding: 40px 20px;
@@ -1300,7 +1218,7 @@ ul {
   border-color: #b9e6c2;
 }
 
-/* ❌ Message d’erreur (rouge) */
+/* Message d’erreur (rouge) */
 .popup-notif.error {
   /*background-color: rgba(255, 92, 92, 0.1);*/
   color: rgb(244, 128, 128);
@@ -1378,42 +1296,3 @@ ul {
   }
 }
 
-/* /* 📱 Responsive pour les bannières 
-@media (max-width: 768px) {
-  .page-banner {
-    height: 280px;
-    background-attachment: scroll;
-  }
-
-  .banner-title {
-    font-size: 28px;
-  }
-
-  .banner-subtitle {
-    font-size: 18px;
-  }
-
-  .home-banner-image {
-    height: 280px;
-    background-attachment: scroll;
-  }
-
-  .home-banner-content h1 {
-    font-size: 24px;
-    line-height: 1.2;
-    padding: 0 16px;
-  }
-
-  .home-btn {
-    font-size: 14px;
-    padding: 10px 20px;
-    width: auto;
-    max-width: 90%;
-  }
-
-  .home-banner-content {
-    text-align: center;
-    padding: 0 16px;
-  }
-}
- */

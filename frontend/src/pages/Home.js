@@ -11,18 +11,17 @@ const BASE_URL = API_URL.replace('/api', '');
 
 
 const Home = () => {
-  //nouveau
   const [vedettes, setVedettes] = useState([]);
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
 
-    // ✅ Chargement des produits vedettes depuis le backend
+    // Chargement des produits vedettes depuis le backend
     axios.get(`${API_URL}/produits/vedettes`)
       .then(res => setVedettes(res.data))
       .catch(err => console.error('Erreur chargement vedettes', err));
   }, []);
-//fin
+
   return (
     <div>
       <Navbar />

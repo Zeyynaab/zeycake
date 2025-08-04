@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../style/global.css';
@@ -8,7 +7,7 @@ const Navbar = () => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 900);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
-  // Mise à jour du type d'affichage (responsive vs desktop)
+  // Mise à jour du type d'affichage 
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth > 900);
@@ -27,7 +26,7 @@ const Navbar = () => {
     return () => window.removeEventListener("storage", checkUser);
   }, []);
 
-  // Fermer menu burger si on clique ailleurs
+  
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest(".navbar")) {

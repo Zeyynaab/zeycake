@@ -188,9 +188,12 @@
 <a name='L123'></a><a href='#L123'>123</a>
 <a name='L124'></a><a href='#L124'>124</a>
 <a name='L125'></a><a href='#L125'>125</a>
-<a name='L126'></a><a href='#L126'>126</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -235,6 +238,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -282,24 +286,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -313,10 +319,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// src/controllers/commandesController.js
-const mongoose = require('mongoose');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const mongoose = require('mongoose');
 const Commande = require('../models/commandes');
 &nbsp;
+//Creation de commande pour luser connecté
 exports.createCommande = async (req, res, next) =&gt; {
   try {
     const { produits, adresse, commentaires, dateRecuperation } = req.body;
@@ -350,7 +356,7 @@ exports.createCommande = async (req, res, next) =&gt; {
   }
 };
 &nbsp;
-&nbsp;
+//Recupere toutes les commandes pour admin
 exports.getAllCommandes = async (req, res, next) =&gt; {
   try {
     const commandes = await Commande.find();
@@ -360,6 +366,7 @@ exports.getAllCommandes = async (req, res, next) =&gt; {
   }
 };
 &nbsp;
+//Recupere une commande par son Id
 exports.getCommandeById = async (req, res, next) =&gt; {
   const { id } = req.params;
   <span class="missing-if-branch" title="if path not taken" >I</span>if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -376,17 +383,17 @@ exports.getCommandeById = async (req, res, next) =&gt; {
   }
 };
 &nbsp;
-// Commandes du client connecté
+// Recupere les commandes du client connecté
 exports.getMesCommandes = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
 <span class="cstat-no" title="statement not covered" >  try {</span>
-    const userId = <span class="cstat-no" title="statement not covered" >req.user.id;</span> // ou req.user._id, les deux fonctionnent avec Mongoose
+    const userId = <span class="cstat-no" title="statement not covered" >req.user.id; </span>
     const commandes = <span class="cstat-no" title="statement not covered" >await Commande.find({ clientId: userId });</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json(commandes);</span>
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    next(err);</span>
   }
 };
-&nbsp;
+//Met a jour une commande existante par ID
 exports.updateCommande = async (req, res, next) =&gt; {
   const { id } = req.params;
   <span class="missing-if-branch" title="if path not taken" >I</span>if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -407,6 +414,7 @@ exports.updateCommande = async (req, res, next) =&gt; {
   }
 };
 &nbsp;
+//Supprime une commande par Id
 exports.deleteCommande = async (req, res, next) =&gt; {
   const { id } = req.params;
   <span class="missing-if-branch" title="if path not taken" >I</span>if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -424,6 +432,7 @@ exports.deleteCommande = async (req, res, next) =&gt; {
   }
 };
 &nbsp;
+//MAJ du statu d'une commande
 exports.updateCommandeStatut = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
 <span class="cstat-no" title="statement not covered" >  try {</span>
     const { statut } = <span class="cstat-no" title="statement not covered" >req.body;</span>
@@ -445,7 +454,7 @@ exports.updateCommandeStatut = <span class="fstat-no" title="function not covere
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-03T21:44:29.927Z
+                at 2025-08-04T03:35:23.193Z
             </div>
         <script src="prettify.js"></script>
         <script>

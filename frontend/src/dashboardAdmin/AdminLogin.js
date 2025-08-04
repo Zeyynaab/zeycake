@@ -1,9 +1,7 @@
-//Page pour connexion admin
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import API from '../api/api';
-//const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050';
 
 
 function AdminLogin() {
@@ -21,7 +19,7 @@ function AdminLogin() {
       if (data.role !== 'admin') {
         throw new Error("Accès refusé. Vous n'êtes pas administrateur.");
       }
- //NEW
+ 
       localStorage.setItem('admin', JSON.stringify({
         email: data.email,
         role: data.role,
@@ -32,18 +30,13 @@ function AdminLogin() {
     }));
 
 
-    // ✅ Redirection
+    // Redirection
     navigate('/admin');
 
   } catch (err) {
     setErreur(err.message);
   }
 };
-  /* //DECONNEXION
-const handleDeconnexion = () => {
-    localStorage.removeItem('user');
-    navigate('/admin');
-  }; */
 
   return (
     <div className="admin-login">
