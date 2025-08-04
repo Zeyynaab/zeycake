@@ -38,7 +38,9 @@ exports.createCommande = async (req, res, next) => {
 //Recupere toutes les commandes pour admin
 exports.getAllCommandes = async (req, res, next) => {
   try {
-    const commandes = await Commande.find();
+    const commandes = await Commande.find()
+    .populate('clientId', 'nom prenom email') 
+    .exec();
     res.status(200).json(commandes);
   } catch (err) {
     next(err);
@@ -66,7 +68,9 @@ exports.getCommandeById = async (req, res, next) => {
 exports.getMesCommandes = async (req, res, next) => {
   try {
     const userId = req.user.id; 
-    const commandes = await Commande.find({ clientId: userId });
+    const commandes = await Commande.find({ clientId: userId })
+    .populate('clientId', 'nom prenom email')
+    .exec();
     res.status(200).json(commandes);
   } catch (err) {
     next(err);

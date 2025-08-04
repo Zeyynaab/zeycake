@@ -1,3 +1,6 @@
+- BADGE
+[![CI status](https://github.com/zeinabtoure/zeycake/actions/workflows/ci-backend.yml/badge.svg?branch=new-branch)](https://github.com/zeinabtoure/zeycake/actions/workflows/ci-backend.yml)
+
 # Projet Express MVC - Node.js
 
 ## Description

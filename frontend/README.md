@@ -2,7 +2,7 @@
 
 ## Description du projet
 
-ZeyCake est une application web de commande de pâtisseries faite maison. L’utilisateur peut se connecter / s’inscrire, parcourir les produits, gérer un panier, passer à la caisse et consulter ses commandes.  Ce projet met en œuvre une application complète dans l’architecture MERN, avec déploiement en ligne.
+ZeyCake est une application web de commande de pâtisseries faite maison. L’utilisateur peut se connecter / s’inscrire, parcourir les produits, gérer un panier, passer à la caisse et consulter ses commandes.  Ce projet met en oeuvre une application complète dans l’architecture MERN, avec déploiement en ligne.
 
 ## Description (frontend)
 Le frontend est une interface réactive en React qui communique avec une API sécurisée pour l’authentification et la gestion des données. Il offre
@@ -86,5 +86,10 @@ Docker (pour lancer le backend en conteneur)
 - Se déconnecter et se reconnecter.
 
 ## Comment se connecter en admin 
+1. En local
 - Nom d'utilisasteur : zeycake@patisserie.com
 - MDP : Admin123!
+
+2. En production
+- Nom d'utilisateur: zeycake@patisserie.com
+- MDP : 123456

@@ -9,7 +9,7 @@ const ProduitDansCommandeSchema = new Schema({
 }, { _id: false });
 
 const commandeSchema = new Schema({
-  clientId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  clientId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   produits: { type: [ProduitDansCommandeSchema], required: true },
   dateCommande: { type: Date, default: Date.now },
   dateRecuperation: Date,
