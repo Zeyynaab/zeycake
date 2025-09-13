@@ -77,3 +77,13 @@ app.get('/', (req, res) => {
 app.use(errorHandler);
 
 module.exports = app;
+
+
+//A ENLEVER
+app.use((err, req, res, next) => {
+  console.error('API error:', err && (err.stack || err)); // ← message clair dans les logs
+  if (err?.code === 11000) {
+    return res.status(409).json({ message: "Un produit avec ce nom existe déjà." });
+  }
+  res.status(500).json({ message: err?.message || "Erreur serveur" });
+});

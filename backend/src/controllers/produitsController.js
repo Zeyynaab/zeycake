@@ -56,48 +56,50 @@ exports.getCategories = async (req, res) => {
 };
 
 //Creer un nouveau produit
+const toBool = (v) => v === true || v === 'true' || v === 'on' || v === '1';
+
 exports.createProduit = async (req, res) => {
   try {
-    const {
+    // Petit log pour voir ce qui arrive réellement au serveur
+    console.log('POST /produits body=', req.body, 'file=', !!req.file);
+
+    // 1) validations + casts (évite les CastError -> 500)
+    const nom = String(req.body.nom || '').trim();
+    const categorie = String(req.body.categorie || '').trim();
+    const prix = Number(req.body.prix);
+
+    if (!nom || !categorie || Number.isNaN(prix)) {
+      return res.status(400).json({ message: 'nom, categorie et prix (nombre) sont requis.' });
+    }
+
+    // 2) (facultatif mais utile) éviter un doublon de nom -> 409 au lieu de 500
+    const existe = await Produit.findOne({ nom });
+    if (existe) {
+      return res.status(409).json({ message: 'Un produit avec ce nom existe déjà.' });
+    }
+
+    // 3) création — image OPTIONNELLE
+    const produit = await Produit.create({
       nom,
-      description,
+      description: req.body.description || '',
       prix,
       categorie,
-      ingredients,
-      tempsPreparation,
-      difficulte,
-      disponible,
-      vedette
-    } = req.body;
-
-    const vedetteBool = vedette === 'true' || vedette === true;
-    const image = req.file ? req.file.filename : req.body.image;
-
-    const nouveauProduit = new Produit({
-      nom,
-      description,
-      prix,
-      categorie,
-      ingredients,
-      tempsPreparation,
-      difficulte,
-      disponible,
-      image,
-      vedette: vedetteBool,
+      ingredients: Array.isArray(req.body.ingredients) ? req.body.ingredients : [],
+      tempsPreparation: req.body.tempsPreparation || undefined,
+      difficulte: req.body.difficulte || undefined,
+      disponible: toBool(req.body.disponible),
+      vedette: toBool(req.body.vedette),
+      image: req.file ? req.file.filename : undefined
     });
 
-    await nouveauProduit.save();
-
-    return res.status(201).json({
-      message: 'Produit créé avec succès',
-      produit: nouveauProduit
-    });
-
+    return res.status(201).json(produit);
   } catch (error) {
-    return res.status(500).json({
-      message: 'Erreur lors de la création',
-      error: error.message
-    });
+    // Affiche la vraie erreur dans les logs Railway + message clair côté client
+    console.error('CREATE /produits failed:', error);
+    if (error?.code === 11000) {
+      return res.status(409).json({ message: 'Un produit avec ce nom existe déjà.' });
+    }
+    return res.status(500).json({ message: error.message || 'Erreur serveur' });
   }
 };
 

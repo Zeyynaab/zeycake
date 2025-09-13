@@ -32,3 +32,12 @@ mongoose
     console.error('✗ Erreur connexion MongoDB', err);
     process.exit(1);
   });
+
+  // ⇩ A METTRE TOUT EN BAS A ENLEVER
+app.use((err, req, res, next) => {
+  console.error('API error:', err);           // stack dans les logs Railway
+  if (err?.code === 11000) {                  // doublon Mongo (index unique)
+    return res.status(409).json({ message: "Un produit avec ce nom existe déjà." });
+  }
+  res.status(500).json({ message: err?.message || "Erreur serveur" });
+});
