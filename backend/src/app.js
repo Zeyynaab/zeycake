@@ -5,6 +5,10 @@ const helmet     = require('helmet');
 const morgan     = require('morgan');
 const rateLimit  = require('express-rate-limit');
 
+
+//Eviter les avertissements
+app.set('trust proxy', 1);
+
 // Middlewares persos 
 const authUser     = require('./middleware/authUser');
 const errorHandler = require('./middleware/errorHandler');
