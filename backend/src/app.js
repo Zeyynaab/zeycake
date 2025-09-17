@@ -5,16 +5,12 @@ const helmet     = require('helmet');
 const morgan     = require('morgan');
 const rateLimit  = require('express-rate-limit');
 
-
-//Eviter les avertissements
-app.set('trust proxy', 1);
-
 // Middlewares persos 
 const authUser     = require('./middleware/authUser');
 const errorHandler = require('./middleware/errorHandler');
 const authClient   = require('./middleware/authClient');
 
-//  Routeurs 
+// Routeurs 
 const authRoutes        = require('./routes/authRoutes');
 const userRoutes        = require('./routes/userRoutes');
 const produitsRoutes    = require('./routes/produits');
@@ -23,15 +19,21 @@ const ingredientsRoutes = require('./routes/ingredients');
 
 const app = express();
 
-// Sécurité et logs
+/* === CORS (en tout début) === */
 app.use(cors({
   origin: [
     'http://localhost:3000',
+    'http://localhost:5173', // dev Vite si besoin
     'https://heartfelt-cendol-7cd5c1.netlify.app'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'], // + OPTIONS/PATCH
+  allowedHeaders: ['Content-Type','Authorization'],         // car tu envoies Authorization
   credentials: true
 }));
+// Répond correctement aux préflights
+app.options('*', cors());
+
+/* === Sécurité / logs / parsers === */
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -39,12 +41,10 @@ app.use(rateLimit({
 }));
 app.use(helmet());
 app.use(morgan('combined'));
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Fichiers statiques
+/* === Fichiers statiques (images) === */
 app.use('/uploads', express.static('uploads', {
   setHeaders: (res) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://heartfelt-cendol-7cd5c1.netlify.app');
@@ -53,16 +53,16 @@ app.use('/uploads', express.static('uploads', {
   }
 }));
 
-// Routes publiques 
+/* === Routes publiques === */
 app.use('/api/auth', authRoutes);
 app.use('/api/produits', produitsRoutes);
 
-// Routes protégées (clients et admins) 
+/* === Routes protégées (clients/admin) === */
 app.use('/api/users', authUser, userRoutes);
 app.use('/api/commandes', authUser, commandesRoutes);
 app.use('/api/ingredients', authUser, ingredientsRoutes);
 
-// Routes endpoint
+/* === Root === */
 app.get('/', (req, res) => {
   res.json({
     message: 'API ZeyCake - Bienvenue!',
@@ -77,17 +77,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Gestion des erreurs
+/* === Gestion des erreurs (un seul handler) === */
 app.use(errorHandler);
 
 module.exports = app;
-
-
-//A ENLEVER
-app.use((err, req, res, next) => {
-  console.error('API error:', err && (err.stack || err)); // ← message clair dans les logs
-  if (err?.code === 11000) {
-    return res.status(409).json({ message: "Un produit avec ce nom existe déjà." });
-  }
-  res.status(500).json({ message: err?.message || "Erreur serveur" });
-});
