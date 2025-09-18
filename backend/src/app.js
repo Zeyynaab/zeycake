@@ -17,21 +17,26 @@ const produitsRoutes    = require('./routes/produits');
 const commandesRoutes   = require('./routes/commandes');
 const ingredientsRoutes = require('./routes/ingredients');
 
+// --- Stripe (webhook doit être monté avant express.json) ---
+const paymentsWebhook   = require('./routes/paymentsWebhook');
+
 const app = express();
 
 /* === CORS (en tout début) === */
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'http://localhost:5173', // dev Vite si besoin
+    'http://localhost:5173',
     'https://heartfelt-cendol-7cd5c1.netlify.app'
   ],
-  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'], // + OPTIONS/PATCH
-  allowedHeaders: ['Content-Type','Authorization'],         // car tu envoies Authorization
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
   credentials: true
 }));
-// Répond correctement aux préflights
 app.options('*', cors());
+
+// --- Webhook Stripe (raw) ---
+app.post('/api/payments/webhook', paymentsWebhook);
 
 /* === Sécurité / logs / parsers === */
 app.use(rateLimit({
@@ -56,6 +61,10 @@ app.use('/uploads', express.static('uploads', {
 /* === Routes publiques === */
 app.use('/api/auth', authRoutes);
 app.use('/api/produits', produitsRoutes);
+
+// --- Paiements (API Stripe) ---
+const paymentsRoutes = require('./routes/payments');
+app.use('/api/payments', authUser, paymentsRoutes);
 
 /* === Routes protégées (clients/admin) === */
 app.use('/api/users', authUser, userRoutes);

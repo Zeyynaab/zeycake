@@ -1,4 +1,3 @@
-
 const express               = require('express');
 const router                = express.Router();
 const commandesController   = require('../controllers/commandesController');
@@ -6,7 +5,7 @@ const authUser              = require('../middleware/authUser');
 const admin                 = require('../middleware/admin');
 const { validateParams, schemas } = require('../middleware/validation');
 
-//POST /api/commandes
+// POST /api/commandes
 router.post(
   '/',
   authUser,
@@ -43,13 +42,22 @@ router.put(
   commandesController.updateCommande
 );
 
-
+// MAJ du statut logistique (admin)
 router.put(
   '/:id/statut',
   authUser,
   admin,
   validateParams(schemas.id),
   commandesController.updateCommandeStatut
+);
+
+// ✅ NOUVEAU : encaisser le solde en cash (admin) → passe paymentStatus="paid", balanceCents=0
+router.put(
+  '/:id/encaisser-solde',
+  authUser,
+  admin,
+  validateParams(schemas.id),
+  commandesController.encaisserSoldeCash
 );
 
 // DELETE /api/commandes/:id

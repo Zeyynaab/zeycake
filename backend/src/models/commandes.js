@@ -17,6 +17,14 @@ const commandeSchema = new Schema({
   total: { type: Number, required: true },
   commentaires: String,
   adresse: String,
+  //Mode payement
+  paymentMethod: { type: String, enum: ['card_deposit','cash','card_full'], default: 'card_deposit' },
+  paymentStatus: { type: String, enum: ['deposit_required','deposit_paid','paid','failed'], default: 'deposit_required' },
+  totalCents:   { type: Number, default: 0 },  // total en cents (sécurisé côté serveur)
+  depositCents: { type: Number, default: 0 },  // acompte en cents
+  balanceCents: { type: Number, default: 0 },  // restant en cents
+  stripePaymentIntentId:  { type: String },    // PI de l’acompte
+  stripeBalanceIntentId:  { type: String },    // (optionnel) PI du solde si payé par carte
 }, { timestamps: true });
 
 module.exports = mongoose.model('Commande', commandeSchema);

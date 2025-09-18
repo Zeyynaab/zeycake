@@ -50,4 +50,11 @@ export const passerCommande = (data) => API.post('/commandes', data);
 
 export const fetchProfile = () => API.get('/auth/me');
 
+// Paiement acompte (Stripe)
+export const createDepositIntent = (payload) => API.post('/payments/create-deposit-intent', payload);
+
+// Encaisser le solde en cash (admin)
+export const encaisserSolde = (id) => API.put(`/commandes/${id}/encaisser-solde`);
+
+
 export default API;
