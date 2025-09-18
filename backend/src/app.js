@@ -46,7 +46,11 @@ app.use(rateLimit({
   max: 100,
   message: 'Trop de requêtes depuis cette IP, réessayez plus tard.'
 }));
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+}));
+
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
