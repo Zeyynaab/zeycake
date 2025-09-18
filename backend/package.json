@@ -4,10 +4,10 @@
   "description": "Application Express MVC avec tests, CI/CD et Docker",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/server.js", 
+    "start": "node src/server.js",
     "test:ci": "NODE_ENV=test jest --coverage --runInBand --testTimeout=30000",
     "test": "npm run test:ci"
-    },
+  },
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
@@ -19,11 +19,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.3",
     "morgan": "^1.10.0",
-    "multer": "^2.0.1"
+    "multer": "^2.0.1",
+    "stripe": "^18.5.0"
   },
   "devDependencies": {
     "jest": "^29.6.2",
-    "supertest": "^6.3.3",
-    "mongodb-memory-server": "8.16.1"
+    "mongodb-memory-server": "8.16.1",
+    "supertest": "^6.3.3"
   }
 }

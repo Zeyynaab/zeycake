@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:5050",
   "dependencies": {
+    "@stripe/react-stripe-js": "^4.0.2",
+    "@stripe/stripe-js": "^7.9.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -21,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:ci" : "react-scripts test --watchAll=false --coverage",
+    "test:ci": "react-scripts test --watchAll=false --coverage",
     "eject": "react-scripts eject"
   },
   "jest": {
