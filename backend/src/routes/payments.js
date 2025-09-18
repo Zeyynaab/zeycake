@@ -1,7 +1,13 @@
 // routes/payments.js
 const router = require('express').Router();
 const Stripe = require('stripe');
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error('STRIPE_SECRET_KEY manquante (Railway).');
+  return new Stripe(key);
+}
+
 const CURRENCY = process.env.CURRENCY || 'cad';
 
 // Création du PaymentIntent pour l'acompte
@@ -11,6 +17,8 @@ router.post('/create-deposit-intent', async (req, res, next) => {
     if (!orderId || !depositCents) {
       return res.status(400).json({ message: 'orderId et depositCents requis' });
     }
+
+    const stripe = getStripe();
 
     const intent = await stripe.paymentIntents.create({
       amount: depositCents,

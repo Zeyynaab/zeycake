@@ -1,13 +1,26 @@
 // routes/paymentsWebhook.js
 const express = require('express');
 const Stripe = require('stripe');
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const Commande = require('../models/commandes');
+
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error('STRIPE_SECRET_KEY manquante (Railway).');
+  return new Stripe(key);
+}
 
 // raw parser requis pour la signature Stripe
 const rawParser = express.raw({ type: 'application/json' });
 
 module.exports = [rawParser, async (req, res) => {
+  let stripe;
+  try {
+    stripe = getStripe();
+  } catch (e) {
+    console.error('[Webhook] ', e.message);
+    return res.status(500).send('Stripe non configuré');
+  }
+
   const sig = req.headers['stripe-signature'];
   let event;
   try {
@@ -29,8 +42,6 @@ module.exports = [rawParser, async (req, res) => {
         stripePaymentIntentId: pi.id
       });
     }
-    // (optionnel) si tu fais plus tard un PaymentIntent pour le solde:
-    // if (orderId && kind === 'balance') { ... paymentStatus:'paid' ... }
   }
 
   return res.json({ received: true });
